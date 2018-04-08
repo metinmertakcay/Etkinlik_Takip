@@ -3,9 +3,8 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
 
-		<title>Login Page</title>
-		
 		<style>
 			.cen{
 				display: block;
@@ -13,10 +12,45 @@
 			}
 		</style>
 
-		<!--Bootstrap CSS-->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-		<link rel="stylesheet" type="text/css" href="css/login.css"/>
+    <!--Bootstrap CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/login.css"/>
 	</head>
+
+	<div class="container">
+    <header>
+     	<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
+        <a class="navbar-brand" href="#"><img src="img/logo.png" width="40" height="40"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      	 <span class="navbar-toggler-icon"></span>
+        </button>
+
+      	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+        	<ul class="navbar-nav mr-auto">
+	          	<li class="nav-item active"><a class="nav-link" href="home.html">Anasayfa <span class="sr-only">(current)</span></a></li>
+	          	<li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategoriler</a>
+		            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+		              	<a class="dropdown-item" href="#">Sempozyumlar</a>
+		              	<a class="dropdown-item" href="#">Kültürel Etkinlikler</a>
+		              	<a class="dropdown-item" href="#">Spor Etkinlikleri</a>
+		              	<a class="dropdown-item" href="#">Burslar</a>
+		            </div>
+	          	</li>
+	          	<li class="nav-item"><a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a></li>
+	          	<li class="nav-item"><a class="nav-link" href="hakk%C4%B1m%C4%B1zda.html">Hakkımızda</a></li>
+	          	<li class="nav-item"><a class="nav-link " href="ileti%C5%9Fim.html">İletişim</a></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          	<li><a class="pr-3" href="registration.html"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
+          	<li class="nav-item dropdown "><a href="#" class="pr-3" data-toggle="dropdown" ><span><i class="fas fa-sign-in-alt"></i></span>Giriş</a></li>
+        </ul>
+      	</div>
+      </nav>
+  	</header>
+  </div>     
+    	
+  <div class="container" ></div>
 
 	<body>
 		<div class="container">
@@ -56,11 +90,63 @@
 			</div>
 		</div>
 		
+		<footer class="page-footer font-small stylish-color-dark pt-3">
+      		<!--Footer Links-->
+          	<div class="container text-center text-md-left">
+              	<div class="row">
+                  	<hr class="clearfix w-100 d-md-none">
+      
+                  	<div class="col-md-2 mx-auto">
+                    	<h5 class="text-uppercase mb-4 mt-3 font-weight-bold">YARDIM</h5>
+                      	<ul class="list-unstyled">
+                          	<li><a href="#">Sık Sorulan Sorular</a></li>
+                          	<li><a href="#">Bize Ulaşın</a></li>
+                      	</ul>
+                  	</div>
+      
+                  	<hr class="clearfix w-100 d-md-none">
+      
+                  	<div class="col-md-2 mx-auto">
+                      	<h5 class="text-uppercase mb-4 mt-3 font-weight-bold">HAKKIMIZDA</h5>
+                      	<ul class="list-unstyled">
+                         
+                          	<li><a href="#">Biz Kimiz?</a></li>
+                        
+                          	<li><a href="#">Kurum Politikamız</a></li>
+                      	</ul>
+                  	</div>
+                  	<hr class="clearfix w-100 d-md-none">
+              </div>
+          </div>
+          <!--/.Footer Links-->
+                     
+            <!--Social buttons-->
+          <div class="text-center border-top pt-4">
+              <ul class="list-unstyled list-inline">
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1"><i class="fab fa-facebook-f fa-2x"></i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1"><i class="fab fa-twitter fa-2x"></i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-gplus mx-1"><i class="fab fa-google-plus fa-2x"> </i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1"><i class="fab fa-linkedin fa-2x"> </i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-dribbble mx-1"><i class="fab fa-dribbble fa-2x"> </i></a></li>
+              </ul>
+          </div>
+          <!--/.Social buttons-->
+      
+          <!--Copyright-->
+          <div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
+              <div class="container-fluid">
+                  © 2018 Copyright: <a href="#"> Yıldız Teknik Üniversite </a>
+      
+              </div>
+          </div>
+          <!--/.Copyright-->    
+      </footer>
+
 		<!--Bootstrap JS-->
 		<script src="js/login.js"></script>
 		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	  <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 	</body>
 </html>

@@ -133,3 +133,53 @@ input[type=email] {
 {
 	color: red;
 }
+
+@media only screen and (max-width: 800px) {
+    .ortala{
+        padding: 0 25%;
+    }
+    .resim{
+        display: none;
+    }
+}
+        
+.deep-blue-gradient {
+  	background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+}
+        
+.warm-flame-gradient {
+  	background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+}
+        
+.warm-flame-gradient:hover {
+    background-image: linear-gradient(65deg, #ff9a9e 100%, #fad0c4 99%, #fad0c4 0%);
+}
+
+#kaydir{
+    padding-top: 70px;
+}
+            
+.resim{
+    height: 70px;
+    width: 130px;
+    padding-right: 13px;
+    border-radius: 3px;
+    opacity: 0.9;
+}
+            
+tr:hover .resim{
+    opacity: 1;
+    transform: scale(1.1);
+}
+a{
+    color:black;
+}
+a:hover{
+    text-decoration: none;
+}
+.bolum{
+    padding: 20px 0;
+}
+.saga{
+    padding-left: 30px;
+}
