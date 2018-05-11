@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/static/style.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+      <title>Etkinlik.com</title>
+  </head>
+  <body>
+    
+  <div class="container">
+      <header>
+          <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
+              <a class="navbar-brand" href="#"><img src="/static/img/logo.png" width="40" height="40"></a>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                      <li class="nav-item active">
+                          <a class="nav-link" href="{{ url_for('sample_route') }}">Anasayfa <span class="sr-only">(current)</span></a>
+                      </li>
+                      <li class="nav-item dropdown">
+                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategoriler</a>
+                          <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="#">Sempozyumlar</a>
+                              <a class="dropdown-item" href="#">Kültürel Etkinlikler</a>
+                              <a class="dropdown-item" href="#">Spor Etkinlikleri</a>
+                              <a class="dropdown-item" href="#">Burslar</a>
+                          </div>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link" href="{{ url_for('route_hakkımızda') }}">Hakkımızda</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link " href="{{ url_for('route_iletisim') }}">İletişim</a>
+                      </li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                      <li><a href="{{ url_for('route_register') }}" style="padding-right: 20px"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
+                      <li><a class="pr-3" href="{{ url_for('routeLogin') }}"><span class="image_margin"><i class="fas fa-sign-in-alt"></i></span>Giriş</a></li>
+                  </ul>
+              </div>
+          </nav>
+      </header>
+  </div>
+
+  <div style="margin-top: 70px"></div>
+    <div class="container" >
+        <div class="row">
+            <div class="col-lg-12">
+                <img src="/static/img/istanbul-siluet.png" style="width: 100%; height: 400px;">
+                <h2 class="my-4 text-center">Takımımız</h2>
+            </div>
+            {% for admin in all_admin %}
+                <div class="col-lg-4 col-sm-6 text-center mb-4">
+                    <img class="rounded-circle img-fluid d-block mx-auto" src={{admin.image}} alt=""><br>
+                    <h3>{{admin.name}} {{admin.surname}}</h3>
+                    <p>{{admin.about}}</p>
+                    <div class="text-center pt-2">
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1" href= {{admin.facebook}}><i class="fab fa-facebook-f fa-2x"></i></a></li>
+                            <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1" href= {{admin.twitter}}><i class="fab fa-twitter fa-2x"></i></a></li>
+                            <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1" href= {{admin.linkedin}}><i class="fab fa-linkedin fa-2x"> </i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <footer class="page-footer font-small stylish-color-dark pt-3">
+        <!--Footer Links-->
+        <div class="container text-center text-md-left">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Bu Haftasonu</h5>
+                    <p>Üzgünüz, bölgenizde bu hafta sonu etkinlik bulunmuyor. Bölgenizi değiştirmeyi deneyin.</p>
+                </div>
+                <hr class="clearfix w-100 d-md-none">
+                <div class="col-md-2 mx-auto">
+                    <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">YARDIM</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('route_iletisim') }}">Bize Ulaşın</a></li>
+                    </ul>
+                </div>
+                <hr class="clearfix w-100 d-md-none">
+                <div class="col-md-2 mx-auto">
+                    <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">HAKKIMIZDA</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Biz Kimiz?</a></li>
+                    </ul>
+                </div>
+                <hr class="clearfix w-100 d-md-none">
+            </div>
+        </div>
+        <!--/.Footer Links-->
+                     
+        <!--Social buttons-->
+        <div class="text-center border-top pt-4">
+            <ul class="list-unstyled list-inline">
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1"><i class="fab fa-facebook-f fa-2x"></i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1"><i class="fab fa-twitter fa-2x"></i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-gplus mx-1"><i class="fab fa-google-plus fa-2x"> </i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1"><i class="fab fa-linkedin fa-2x"> </i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-dribbble mx-1"><i class="fab fa-dribbble fa-2x"> </i></a></li>
+            </ul>
+        </div>
+        <!--/.Social buttons-->
+      
+        <!--Copyright-->
+        <div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
+            <div class="container-fluid">
+                © 2018 Copyright: <a href="#"> Yıldız Teknik Üniversitesi </a>
+            </div>
+        </div>
+        <!--/.Copyright-->
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

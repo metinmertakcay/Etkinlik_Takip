@@ -1,1 +1,0 @@
-# Etkinlik_Takip

@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+      <link rel="stylesheet" type="text/css" href="/static/css/registration.css">
+      <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+      <title>Etkinlik.com</title>
+      <!-- Axios and CSRF -->
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+      <!-- Axios and CSRF -->
+
+      <style>
+        .cen{
+          display: block;
+          margin:0 auto;
+        }
+
+        .container1{
+          background-color: lightblue;
+          width: 190px;
+          height: 70px;
+          overflow: scroll;
+        }
+
+
+        #ilgi {
+            margin: 1% 4% 4% 4%;
+        }
+      </style>
+  </head>
+  
+  <body>
+    <div class="container">
+      <header>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
+          <a class="navbar-brand" href="#"><img src="/static/img/logo.png" width="40" height="40"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('sample_route') }}">Anasayfa <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategoriler</a>
+                <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="#">Sempozyumlar</a>
+                  <a class="dropdown-item" href="#">Kültürel Etkinlikler</a>
+                  <a class="dropdown-item" href="#">Spor Etkinlikleri</a>
+                  <a class="dropdown-item" href="#">Burslar</a>
+                </div>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('route_hakkımızda') }}">Hakkımızda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link " href="{{ url_for('route_iletisim') }}">İletişim</a>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a class="pr-3" href="{{ url_for('route_register') }}"><span class="image_margin"><i class="fas fa-user"></i></span> Kayıt Ol</a></li>
+              <li><a class="pr-3" href="{{ url_for('routeLogin') }}"><span class="image_margin"><i class="fas fa-sign-in-alt"></i></span>Giriş</a></li>
+            </ul>
+          </div>
+        </nav>
+      </header>
+    </div>
+
+    <div id="kaydir"></div>
+    <div class="container"></div>
+
+    <div class="image_registration"></div>
+    <div class="container">
+      <div class="resim">
+        <img src="/static/img/registration_image.PNG" class="img">
+      </div>
+      <div class="col-sm-10 cen">
+        <div class="jumbotron jumbotron-fluid">
+          <div class="form-group-registration">
+            <h1 class="registration">Kayıt Ol</h1>
+            <hr class="cizgi"/>
+          </div>
+          <div class="container">
+            <form action="/register" method="post" class="form-horizontal" name="Form" id="Form" onsubmit="return submission()">
+              <div class="form-row">
+                <div class="col-md-6 mb-4">
+                  <label for="formGroupExampleInput">İsim</label>
+                  <input type="text" class="form-control" placeholder="İsim" name="isim" id="isim" required/>
+                </div>   
+              
+                <div class="col-md-6 mb-4">
+                  <label for="formGroupExampleInput">Soyisim</label>
+                  <input type="text" class="form-control" placeholder="Soyisim" name="soyisim" required/>
+                </div>   
+              </div>
+               
+              <div class="form-row">
+                <div class="col-md-6 mb-4">
+                  <label for="formGroupExampleInput">Doğum Tarihi</label>
+                  <input type="date" class="form-control" id="formGroupExampleInput" placeholder="Example input" value="1970-01-01" min="1930-01-01" max="2030-01-01" name="tarih">
+                </div>   
+               
+                <div class="col-md-6 mb-4">
+                  <label for="formGroupExampleInput">Şehir</label>
+                  <select class="custom-select" id="inputGroupSelect01" name="sehir">
+                    <option selected>Tüm Yerler</option>
+                    <option value="&#304;stanbul">&#304;stanbul</option>
+                    <option value="Ankara">Ankara</option>
+                    <option value="&#304;zmir">&#304;zmir</option>
+                    <option value="Adana">Adana</option>
+                    <option value="Ad&#305;yaman">Ad&#305;yaman</option>
+                    <option value="Afyonkarahisar">Afyonkarahisar</option>
+                    <option value="A&#287;r&#305;">A&#287;r&#305;</option>
+                    <option value="Aksaray">Aksaray</option>
+                    <option value="Amasya">Amasya</option>
+                    <option value="Antalya">Antalya</option>
+                    <option value="Ayd&#305;n">Ayd&#305;n</option>
+                    <option value="Bal&#305;kesir">Bal&#305;kesir</option>
+                    <option value="Bart&#305;n">Bart&#305;n</option>
+                    <option value="Batman">Batman</option>
+                    <option value="Bilecik">Bilecik</option>
+                    <option value="Bing&ouml;l">Bing&ouml;l</option>
+                    <option value="Bolu">Bolu</option>
+                    <option value="Burdur">Burdur</option>
+                    <option value="Bursa">Bursa</option>
+                    <option value="&Ccedil;anakkale">&Ccedil;anakkale</option>
+                    <option value="&Ccedil;ank&#305;r&#305;">&Ccedil;ank&#305;r&#305;</option>
+                    <option value="&Ccedil;orum">&Ccedil;orum</option>
+                    <option value="Denizli">Denizli</option>
+                    <option value="Diyarbak&#305;r">Diyarbak&#305;r</option>
+                    <option value="D&uuml;zce">D&uuml;zce</option>
+                    <option value="Edirne">Edirne</option>
+                    <option value="Elaz&#305;&#287;">Elaz&#305;&#287;</option>
+                    <option value="Erzincan">Erzincan</option>
+                    <option value="Erzurum">Erzurum</option>
+                    <option value="Eski&#351;ehir">Eski&#351;ehir</option>
+                    <option value="Gaziantep">Gaziantep</option>
+                    <option value="Giresun">Giresun</option>
+                    <option value="G&uuml;m&uuml;&#351;hane">G&uuml;m&uuml;&#351;hane</option>
+                    <option value="Hatay">Hatay</option>
+                    <option value="I&#287;d&#305;r">I&#287;d&#305;r</option>
+                    <option value="Isparta">Isparta</option>
+                    <option value="Kahramanmara&#351;">Kahramanmara&#351;</option>
+                    <option value="Karab&uuml;k">Karab&uuml;k</option>
+                    <option value="Kars">Kars</option>
+                    <option value="Kastamonu">Kastamonu</option>
+                    <option value="Kayseri">Kayseri</option>
+                    <option value="Kilis">Kilis</option>
+                    <option value="K&#305;r&#305;kkkale">K&#305;r&#305;kkkale</option>
+                    <option value="K&#305;rklareli">K&#305;rklareli</option>
+                    <option value="K&#305;r&#351;ehir">K&#305;r&#351;ehir</option>
+                    <option value="Kocaeli">Kocaeli</option>
+                    <option value="Konya">Konya</option>
+                    <option value="K&uuml;tahya">K&uuml;tahya</option>
+                    <option value="Malatya">Malatya</option>
+                    <option value="Manisa">Manisa</option>
+                    <option value="Mardin">Mardin</option>
+                    <option value="Mersin">Mersin</option>
+                    <option value="Mu&#287;la">Mu&#287;la</option>
+                    <option value="Mu&#351;">Mu&#351;</option>
+                    <option value="Nev&#351;ehir">Nev&#351;ehir</option>
+                    <option value="Ni&#287;de">Ni&#287;de</option>
+                    <option value="Ordu">Ordu</option>
+                    <option value="Osmaniye">Osmaniye</option>
+                    <option value="Rize">Rize</option>
+                    <option value="Sakarya">Sakarya</option>
+                    <option value="Samsun">Samsun</option>
+                    <option value="&#350;anl&#305;urfa">&#350;anl&#305;urfa</option>
+                    <option value="Siirt">Siirt</option>
+                    <option value="Sinop">Sinop</option>
+                    <option value="&#350;&#305;rnak">&#350;&#305;rnak</option>
+                    <option value="Sivas">Sivas</option>
+                    <option value="Tekirda&#287;">Tekirda&#287;</option>
+                    <option value="Tokat">Tokat</option>
+                    <option value="Trabzon">Trabzon</option>
+                    <option value="Tunceli">Tunceli</option>
+                    <option value="U&#351;ak">U&#351;ak</option>
+                    <option value="Van">Van</option>
+                    <option value="Yalova">Yalova</option>
+                    <option value="Yozgat">Yozgat</option>
+                    <option value="Zonguldak">Zonguldak</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-6 mb-4" id= "cinsiyet">
+                  <label class="col-sm-2 col-form-label">Cinsiyet</label>
+                  <div class="col-sm-5">
+                    <div class="radio">
+                      <label><input type="radio" name="kadin">Kadın</label>
+                    </div>
+                    <div class="radio">
+                      <label><input type="radio" name="erkek">Erkek</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-5 mb-4" id="ilgi">
+                  <div class="selectBox" onclick="showCheckboxes()">
+                    <select class="co-4"><option>İlgi Alanları</option></select>
+                    <div class="overSelect"></div>
+                  </div>
+                  <div id="checkboxes">
+                    <div class="container1">
+                      {% for interest in interestList %}
+                      <input type="checkbox" name="ilgiAlan" value={{ interest.id }}/> {{interest.interestName}} <br />
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="col-md-6 mb-4">
+                  <label for="exampleInputEmail">E-mail</label>
+                  <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="E-mail" name="email" required/>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <label for="exampleInputEmail1">E-mail Tekrar</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail" name="emailTekrar" required/>
+                </div>
+              </div>
+              
+              <div class="form-row">
+                <div class="col-md-6 mb-4">
+                  <label for="exampleInputPassword">Şifre</label>
+                  <input type="password" class="form-control" id="exampleInputPassword" placeholder="Şifre" name="sifre" required/>
+                </div>
+               
+                <div class="col-md-6 mb-4">
+                  <label for="exampleInputPassword1">Şifre Tekrar</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Şifre" name="sifreTekrar" required/>
+                </div>
+              </div>
+                  
+              <div class="container text-center">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Kayıt Ol</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--/.Footer Links-->
+                     
+    <!--Social buttons-->
+    <div class="text-center border-top pt-4">
+      <ul class="list-unstyled list-inline">
+        <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1"><i class="fab fa-facebook-f fa-2x"></i></a></li>
+        <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1"><i class="fab fa-twitter fa-2x"></i></a></li>
+        <li class="list-inline-item"><a class="btn-floating btn-sm btn-gplus mx-1"><i class="fab fa-google-plus fa-2x"> </i></a></li>
+        <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1"><i class="fab fa-linkedin fa-2x"> </i></a></li>
+        <li class="list-inline-item"><a class="btn-floating btn-sm btn-dribbble mx-1"><i class="fab fa-dribbble fa-2x"> </i></a></li>
+        </ul>
+    </div>
+    <!--/.Social buttons-->
+      
+    <!--Copyright-->
+    <div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
+      <div class="container-fluid">© 2018 Copyright: <a href="#"> Yıldız Teknik Üniversitesi </a></div>
+    </div>
+    <!--/.Copyright-->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/static/js/registration.js"></script>
+  </body>
+</html>
