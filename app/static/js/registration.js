@@ -10,7 +10,7 @@ function showCheckboxes(){
   }
 }
 
-//onsubmit="return submission()"
+/*onsubmit="return submission()"
 function submission(){
     var sehir = document.forms["Form"]["inputGroupSelect01"].value;
     document.write(sehir);
@@ -20,4 +20,4 @@ function submission(){
         return false;
     }
     return false;
-}
+}*/

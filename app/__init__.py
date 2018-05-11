@@ -6,61 +6,30 @@ config dosyası iöçerisinden erişilerek gerçekleştirilecektir.
 /iletisim Kullanıcının şikayet etmesi durumu için oluşturulmuş sayfadır. Bu sayfada kullanıcının koymuş olduğu ip adresi ve koyma saati gibi
 bilgiler saklanacaktır. Anlaşılmayan yer olursa iletişim için metinmakcay@gmail.com adresine mail atabilirsiniz. :))
 / """
-from config import SECRET_KEY
-from flask import Flask, render_template, request, flash, redirect, url_for, g
-from flask_mail import Mail, Message
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import IntegrityError
+from flask import Flask, render_template, request, flash, redirect, url_for, session, abort
 from .models import DBSession, Users, Communication, Aboutus, Interest, UserInterest
-from sqlalchemy.sql import text
+from werkzeug.security import generate_password_hash, check_password_hash
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+from sqlalchemy.sql import select, update
+from sqlalchemy.exc import IntegrityError
+from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
+from config import SECRET_KEY
 import socket
 import time
 import uuid
-from sqlalchemy.sql import select, update
-from werkzeug.security import generate_password_hash, check_password_hash
-from itsdangerous import URLSafeTimedSerializer, SignatureExpired
-from functools import wraps
-import datetime
-import jwt
 
 app = Flask(__name__)
 app.config.from_object('config')
-
-app.config.update(dict(
-    DEBUG = True,
-    MAIL_SERVER = 'smtp.gmail.com',
-    MAIL_PORT = 587,
-    MAIL_USE_TLS = True,
-    MAIL_USE_SSL = False,
-    MAIL_USERNAME = 'modul.etkinlik@gmail.com',
-    MAIL_PASSWORD = 'etkinlik1996',
-))
-
 mail = Mail(app)
 urlSafeSerializer = URLSafeTimedSerializer(SECRET_KEY)
 
-def token_required(f):
-    @wraps(f)
-    def decorated(*args, **kwargs):
-        if tokenv == None:
-            return redirect(url_for('routeLogin'))
-        try:
-            data = jwt.decode(token, SECRET_KEY)
-            db = DBSession()
-            user = select([Users]).where(Users.publicId == data)
-            result = db.execute(user)
-        except:
-            return redirect(url_for('routeLogin'))
-
-        return f(result, *args, **kwargs)
-    return decorated
-
-token = None
-
 @app.route('/index')
-@token_required
 def index():
-    return render_template("index.html")
+    if 'email' in session:
+        return render_template("index.html")
+    else:
+        abort(404)
 
 @app.route('/')
 def sample_route():
@@ -126,7 +95,7 @@ def routeLogin(error=None):
             for row in result:
                 if check_password_hash(row['password'], password):
                     if row['validation'] == True:
-                        token = jwt.encode({'publicId' : row['publicId'], 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=30)},SECRET_KEY)
+                        session['email'] = row['email']
                         return "<h1>Başarıyla giriş yapılmıştır<h1>"
                     else:
                         error = "Geçerli bir email adresi değildir!"
@@ -138,9 +107,10 @@ def routeLogin(error=None):
     return render_template('login.html', error=error)
 
 @app.route('/register',methods=['POST','GET'])
-def route_register():
+def register():
     db = DBSession()
     interestList = db.execute("SELECT * FROM Interest")
+    db.close()
 
     if request.method == 'POST':
         name = request.form.get("isim")
@@ -152,33 +122,59 @@ def route_register():
         passwordAgain = request.form.get("sifreTekrar")
 
         if email == emailAgain and password == passwordAgain:
+
             city = request.form.get("sehir")
             if city != 'Tüm Yerler':
+
                 woman = request.form.get("kadin")
                 man = request.form.get("erkek")
                 if woman == 'on' or man == 'on':
-                    if woman == 'on':
-                        gender = 'F'
-                    else:
-                        gender = 'M'
+
+                    gender = findGender(woman)
                     interest = request.form.getlist("ilgiAlan")
                     interest = deleteSlash(interest)
                     if len(interest) != 0:
+
                         db = DBSession()
-                        user = Users(name=name, surname=surname, birtdate=birthdate, city=city, gender=gender,
-                                    password=generate_password_hash(password, method='sha256'), email=email, publicId=str(uuid.uuid4()), validation=False)
+                        user = Users(name=name, surname=surname, birtdate=birthdate, city=city, gender=gender,password=generate_password_hash(password,
+                                        method='sha256'), email=email, publicId=str(uuid.uuid4()), validation=False)
                         db.add(user)
 
                         try:
                             db.commit()
-                            addInterest(email, interest)
+                            addInterestUserTable(email, interest)
                             confirmEmail(email)
                         except IntegrityError:
                             db.rollback()
                         db.close()
+
                         return render_template('login.html')
 
     return render_template('register.html', interestList=interestList)
+
+def findGender(woman):
+    if woman == 'on':
+        return 'F'
+    else:
+        return 'M'
+
+def deleteSlash(interests):
+    size = len(interests)
+    for i in range(0, size):
+        interests[i] = interests[i].replace('/','')
+
+    return interests
+
+def addInterestUserTable(email, interests):
+    db = DBSession()
+    s = select([Users]).where(Users.email == email)
+    result = db.execute(s)
+
+    for row in result:
+        for interest in interests:
+            userInterest = UserInterest(row['userId'], interest)
+            db.add(userInterest)
+    db.commit()
 
 def confirmEmail(email):
     token = urlSafeSerializer.dumps(email, salt='email-confirm')
@@ -199,31 +195,16 @@ def confirm_email(token):
     db.commit()
     return render_template('login.html')
 
-def deleteSlash(interests):
-    for i in range(0, len(interests)):
-        interests[i] = interests[i].replace('/','')
-
-    return interests
-
-def addInterest(email, interests):
-    db = DBSession()
-
-    s = select([Users]).where(Users.email == email)
-    result = db.execute(s)
-    for row in result:
-        for i in interests:
-            userinterest = UserInterest(row['userId'], i)
-            db.add(userinterest)
-    db.commit()
-
 @app.route('/hakkımızda', methods=['GET'])
-def route_hakkımızda():
+def hakkımızda():
     db = DBSession()
     all_admin = db.execute("SELECT * FROM Aboutus")
+    db.close()
+
     return render_template("hakkımızda.html", all_admin=all_admin)
 
 @app.route('/iletisim', methods=['POST', 'GET'])
-def route_iletisim():
+def iletisim():
 
     if request.method == 'POST':
         name = request.form.get("name")
@@ -234,47 +215,12 @@ def route_iletisim():
         pushdate = time.strftime('%Y-%m-%d %H:%M:%S')
 
         save_user_message(name, email, phone, message, ipaddress, pushdate)
+
     return render_template("iletisim.html")
 
 def save_user_message(name, email, phone, message, ipaddress, pushdate):
     db = DBSession()
     communication = Communication(name=name, email=email, phone=phone, message=message, ipaddress=ipaddress, pushdate=pushdate)
-
     db.add(communication)
     db.commit()
     db.close()
-
-
-
-
-
-"""
-Hakkımızda kısmında çalıştırılmış olan kod parçası
-db = DBSession()
-
-    x = Aboutus('Aslıhan', 'Ilgaz', '/static/img/murat.jpg', '1996 doğumlu, Yıldız Teknik Üniversitesi 3. sınıf öğrencisidir', 'https://www.facebook.com/profile.php?id=100000290109058', 'https://twitter.com/llneverdie', 'https://www.linkedin.com/in/asl%C4%B1han-ilgaz-38a909122/')
-    db.add(x)
-
-    x = Aboutus('Metin Mert', 'Akçay', '/static/img/metin.jpeg', '1996 doğumlu, Yıldız Teknik Üniversitesi 3. sınıf öğrencisidir', 'https://www.facebook.com/metinmert.akcay', '#', 'https://www.linkedin.com/in/metin-mert-ak%C3%A7ay-25120715a/')
-    db.add(x)
-
-    x = Aboutus('Murat', 'Seymen', '/static/img/murat.jpg', '1996 doğumlu, Yıldız Teknik Üniversitesi 3. sınıf öğrencisidir', 'https://www.facebook.com/murat.seymen.35', '#', 'https://www.linkedin.com/in/murat-seymen-886720159/')
-    db.add(x)
-
-    db.commit()
-    db.close()
-"""
-
-"""
-İlgi alanlarının oluşturulması
-db = DBSession()
-
-    interestList = ["Spor", "Bilgisayar", "Siyaset", "Yiyecek", "Yolculuk", "El Sanatları", "Sağlık", "Haberleşme", "Teknoloji", "Hayvanlar Alemi", "Bahçe", "Fotoğrafçılık", "Moda", "Müzik", "Sinema", "Kitap", "Sergi"]
-    for interest in interestList:
-        print(interest)
-        interestName = Interest(interestName=interest)
-        db.add(interestName)
-
-    db.commit()
-    db.close()
-"""

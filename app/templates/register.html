@@ -55,14 +55,14 @@
                 <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('route_hakkımızda') }}">Hakkımızda</a>
+                <a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link " href="{{ url_for('route_iletisim') }}">İletişim</a>
+                <a class="nav-link " href="{{ url_for('iletisim') }}">İletişim</a>
               </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <li><a class="pr-3" href="{{ url_for('route_register') }}"><span class="image_margin"><i class="fas fa-user"></i></span> Kayıt Ol</a></li>
+              <li><a class="pr-3" href="{{ url_for('register') }}"><span class="image_margin"><i class="fas fa-user"></i></span> Kayıt Ol</a></li>
               <li><a class="pr-3" href="{{ url_for('routeLogin') }}"><span class="image_margin"><i class="fas fa-sign-in-alt"></i></span>Giriş</a></li>
             </ul>
           </div>
@@ -85,7 +85,7 @@
             <hr class="cizgi"/>
           </div>
           <div class="container">
-            <form action="/register" method="post" class="form-horizontal" name="Form" id="Form" onsubmit="return submission()">
+            <form action="/register" method="post" class="form-horizontal" name="Form" id="Form">
               <div class="form-row">
                 <div class="col-md-6 mb-4">
                   <label for="formGroupExampleInput">İsim</label>

@@ -12,7 +12,6 @@ from sqlalchemy import create_engine
 from uuid import uuid4
 from time import time
 
-
 Base = declarative_base()
 
 class Users(Base):
