@@ -35,14 +35,15 @@ def index():
 def sample_route():
     return render_template('home.html')
 
-@app.route('/emailGonder',methods=['POST','GET'])
-def emailGonder(error=None):
+@app.route('/send_email',methods=['POST','GET'])
+def send_email(error=None):
     if request.method == 'POST':
         email = request.form.get('email')
 
         db = DBSession()
         s = select([Users]).where(Users.email == email)
         result = db.execute(s)
+        db.close()
 
         for user in result:
             sendMailforPasswordChanging(email)
@@ -51,6 +52,7 @@ def emailGonder(error=None):
         else:
             error = "Böyle bir mail adresi bulunmamaktadır."
             return render_template('emailGonder.html', error=error)
+
     return render_template('emailGonder.html', error=error)
 
 def sendMailforPasswordChanging(email):
@@ -66,7 +68,8 @@ def forget(token):
         try:
             email = urlSafeSerializer.loads(token, salt='email-confirm', max_age=3600)
         except SignatureExpired:
-            return "<h1>Token is expired<h1>"
+            abort(404)
+
         password = request.form.get('password')
         passwordAgain = request.form.get('passwordAgain')
 
@@ -75,11 +78,14 @@ def forget(token):
             stmt = update(Users).where(Users.email == email).values(password=generate_password_hash(password))
             db.execute(stmt)
             db.commit()
-            return redirect(url_for('routeLogin'))
+            db.close()
+
+            return redirect(url_for('login'))
+
     return render_template('forget.html', token=token)
 
 @app.route('/Login', methods=['GET','POST'])
-def routeLogin(error=None):
+def login(error=None):
 
     if request.method == 'POST':
         email = request.form.get('email')
@@ -88,22 +94,26 @@ def routeLogin(error=None):
         db = DBSession()
         s = select([Users]).where(Users.email == email)
         result = db.execute(s)
+        db.close()
 
         if not(password):
             error = None
         else:
             for row in result:
                 if check_password_hash(row['password'], password):
+
                     if row['validation'] == True:
                         session['email'] = row['email']
                         return "<h1>Başarıyla giriş yapılmıştır<h1>"
                     else:
                         error = "Geçerli bir email adresi değildir!"
                         return render_template('login.html', error=error)
+
                 else:
                     if password and email:
                         error = "Hatalı mail adresi veya şifre"
                         return render_template('login.html', error=error)
+
     return render_template('login.html', error=error)
 
 @app.route('/register',methods=['POST','GET'])

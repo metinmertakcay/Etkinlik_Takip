@@ -44,7 +44,7 @@
 						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li><a class="pr-3" href="{{ url_for('register') }}"><span class="image_margin"><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
-							<li><a class="pr-3" href="{{ url_for('routeLogin') }}"><span class="image_margin"><i class="fas fa-sign-in-alt"></i></span>Giriş</a></li>
+							<li><a class="pr-3" href="{{ url_for('login') }}"><span class="image_margin"><i class="fas fa-sign-in-alt"></i></span>Giriş</a></li>
 						</ul>
 					</div>
 				</nav>
@@ -53,7 +53,7 @@
 
 		<div class="col-sm-10 cen">
 			<div class="jumbotron">
-				<form action="/emailGonder" method="post" class="form-horizontal" name="Form" id="Form">
+				<form action="/send_email" method="post" class="form-horizontal" name="Form" id="Form">
 					<label class="attribute">Email</label>
 					<div class="form-group input-group">
 						<div class="input-group-addon"><i class="fa fa-at cen"></i></div>
