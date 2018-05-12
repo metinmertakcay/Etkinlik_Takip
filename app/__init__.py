@@ -7,7 +7,7 @@ config dosyası iöçerisinden erişilerek gerçekleştirilecektir.
 bilgiler saklanacaktır. Anlaşılmayan yer olursa iletişim için metinmakcay@gmail.com adresine mail atabilirsiniz. :))
 / """
 from flask import Flask, render_template, request, flash, redirect, url_for, session, abort
-from .models import DBSession, Users, Communication, Aboutus, Interest, UserInterest
+from .models import DBSession, Users, Communication, Aboutus, Interest, UserInterest, Yorum,Sikayet
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 from sqlalchemy.sql import select, update
@@ -15,6 +15,9 @@ from sqlalchemy.exc import IntegrityError
 from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 from config import SECRET_KEY
+# noinspection PyUnresolvedReferences
+import psycopg2
+import jinja2
 import socket
 import time
 import uuid
@@ -24,16 +27,41 @@ app.config.from_object('config')
 mail = Mail(app)
 urlSafeSerializer = URLSafeTimedSerializer(SECRET_KEY)
 
-@app.route('/index')
-def index():
-    if 'email' in session:
-        return render_template("index.html")
-    else:
-        abort(404)
-
-@app.route('/')
+@app.route('/',methods=['POST','GET'])
 def sample_route():
-    return render_template('home.html')
+    db = DBSession()
+    items = db.execute(
+        'SELECT * FROM etkinlik, etkinlik_özellik, "etkinlikTipi" where özellik_id=9 and etkinlik.e_id=etkinlik_özellik.e_id and etkinlik."etklinlikTipi"="etkinlikTipi".tip_id order by "yıldızPuanToplamı" DESC, etkinlik.e_id asc limit 5')
+    tarih = db.execute(
+        'SELECT * FROM etkinlik, etkinlik_özellik, "etkinlikTipi" where özellik_id=1 and etkinlik.e_id=etkinlik_özellik.e_id and etkinlik."etklinlikTipi"="etkinlikTipi".tip_id order by "yıldızPuanToplamı" DESC, etkinlik.e_id asc limit 5')
+    items2 = db.execute('SELECT * FROM etkinlik order by "yıldızPuanToplamı" DESC limit 5')
+    if request.method == 'POST':
+        kategori = request.form.get("inputGroupSelect01")
+        tarih2 = request.form.get("inputGroupSelect02")
+        yer = request.form.get("inputGroupSelect03")
+        db = DBSession()
+        items2 = db.execute(
+            'SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE ' + kategori + ' özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND ' + yer + ' etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id ' + tarih2 + ' order by etkinlik.e_id asc')
+        return render_template("search_liste_görüntüleme.html", items2=items2)
+    else:
+        return render_template('home.html', items=items, items2=items2, tarih=tarih, itemler=zip(tarih, items))
+
+@app.route('/home',methods=['POST','GET'])
+def sample_proute():
+    db = DBSession()
+    items = db.execute('SELECT * FROM etkinlik,etkinlik_özellik,"etkinlikTipi" where özellik_id=9 and etkinlik.e_id=etkinlik_özellik.e_id and etkinlik."etklinlikTipi"="etkinlikTipi".tip_id order by "yıldızPuanToplamı" DESC, etkinlik.e_id asc limit 5')
+    tarih = db.execute('SELECT * FROM etkinlik,etkinlik_özellik,"etkinlikTipi" where özellik_id=1 and etkinlik.e_id=etkinlik_özellik.e_id and etkinlik."etklinlikTipi"="etkinlikTipi".tip_id order by "yıldızPuanToplamı" DESC, etkinlik.e_id asc limit 5')
+    items2 = db.execute('SELECT * FROM etkinlik order by "yıldızPuanToplamı" DESC limit 5')
+    if request.method == 'POST':
+        kategori = request.form.get("inputGroupSelect01")
+        tarih2 = request.form.get("inputGroupSelect02")
+        yer = request.form.get("inputGroupSelect03")
+        db = DBSession()
+        items2 = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE ' + kategori  + ' özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND ' +yer + ' etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id ' + tarih2 + ' order by etkinlik.e_id asc')
+        return render_template("profil_search_liste_görüntüleme.html", items2=items2)
+    else:
+        return render_template('profil_home.html', items=items , items2 = items2,tarih=tarih,itemler=zip(tarih,items))
+
 
 @app.route('/send_email',methods=['POST','GET'])
 def send_email(error=None):
@@ -232,5 +260,141 @@ def save_user_message(name, email, phone, message, ipaddress, pushdate):
     db = DBSession()
     communication = Communication(name=name, email=email, phone=phone, message=message, ipaddress=ipaddress, pushdate=pushdate)
     db.add(communication)
+    db.commit()
+    db.close()
+
+
+@app.route('/sikayet', methods=['GET'])
+def route_sikayet():
+    db = DBSession()
+    items = db.execute('SELECT * FROM sikayet, users, etkinlik, "etkinlikTipi" where sikayet.k_id=users."userId" and etkinlik.e_id = sikayet.e_id and "etkinlikTipi".tip_id=etkinlik."etklinlikTipi"')
+    db.close()
+
+    return render_template("admin_bildirim.html", items=items)
+
+@app.route('/cozum2/<int:id>', methods=['GET'])
+def route_cozum2(id):
+    db = DBSession()
+    db.execute('UPDATE sikayet SET deger = 2 WHERE sikayet_id=' + str(id) + ';')
+    db.commit()
+    db.close()
+
+    return  redirect("/sikayet/0")
+
+@app.route('/cozum1/<int:id>', methods=['GET'])
+def route_cozum1(id):
+
+    db = DBSession()
+    db.execute('UPDATE sikayet SET deger = 1 WHERE sikayet_id=' + str(id) + ';')
+    db.commit()
+    db.close()
+
+    return  redirect("/sikayet/0")
+
+@app.route('/sikayet/<int:deger>', methods=['GET'])
+def route_sikayet1(deger):
+    db = DBSession()
+
+    if(id == 2):
+        items = db.execute('SELECT * FROM sikayet, users, etkinlik, "etkinlikTipi" where sikayet.k_id=users."userId" and etkinlik.e_id = sikayet.e_id and "etkinlikTipi".tip_id=etkinlik."etklinlikTipi" and deger=' + str(deger) + 'and "sikayetTarihi"<current_date +3');
+    else:
+        items = db.execute('select * from sikayet, users, etkinlik, "etkinlikTipi" where sikayet.k_id=users."userId" and etkinlik.e_id = sikayet.e_id and "etkinlikTipi".tip_id=etkinlik."etklinlikTipi" and deger=' + str(deger) + '')
+    db.close()
+
+    return render_template("admin_bildirim.html", items=items)
+
+@app.route('/liste/<int:id>', methods=['GET'])
+def route_liste(id):
+    db = DBSession()
+
+    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=1 AND etkinlik.e_id = etkinlik_özellik.e_id  AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    db.close()
+
+    return render_template("liste_görüntüleme.html", items=items,tarih=tarih,items2=zip(tarih,items))
+
+@app.route('/pliste/<int:id>', methods=['GET'])
+def route_pliste(id):
+    db = DBSession()
+
+    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=1 AND etkinlik.e_id = etkinlik_özellik.e_id  AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    db.close()
+
+    return render_template("profil_liste_görüntüleme.html", items=items,tarih=tarih,items2=zip(tarih,items))
+
+@app.route('/liste', methods=['GET'])
+def route_list():
+    env = jinja2.Environment()
+    env.globals.update(zip=zip)
+    db = DBSession()
+    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE özellik_id=1 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+
+    return render_template("liste_görüntüleme.html", items=items,tarih=tarih,items2=zip(tarih,items))
+
+@app.route('/pliste', methods=['GET'])
+def route_plist():
+    env = jinja2.Environment()
+    env.globals.update(zip=zip)
+    db = DBSession()
+    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE özellik_id=1 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+
+    return render_template("profil_liste_görüntüleme.html", items=items,tarih=tarih,items2=zip(tarih,items))
+
+@app.route('/etkinlik/<int:id>', methods=['GET'])
+def route_etkinlik(id):
+    db = DBSession()
+    items = db.execute('SELECT * FROM etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=1 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    yer = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=7 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    sehir = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=9 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    ucret = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=3 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    harita = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=10 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    yorum = db.execute('SELECT * FROM yorum,etkinlik,users WHERE yorum.e_id=etkinlik.e_id and etkinlik.e_id= ' + str(id) + ' AND users."userId" = yorum.k_id')
+    db.close()
+
+    return render_template("etkinlikDuvarı.html",items = items,tarih=tarih,yer = yer , sehir = sehir , ucret = ucret,harita =harita,yorum=yorum)
+
+@app.route('/petkinlik/<int:id>', methods=['POST','GET'])
+def route_petkinlik(id):
+    if request.form.get('button', None) == "yorum":
+            k_id = request.form.get("k_id")
+            yorum = request.form.get("yorum")
+            pushdate = time.strftime('%Y-%m-%d %H:%M:%S')
+            save_yorum(k_id, id, yorum, pushdate)
+
+    if request.form.get('button2', None) == "sikayet":
+            eden_k_id = request.form.get("eden_k_id")
+            sikayet_k_id = request.form.get("sikayet_k_id")
+            etkinlik_e_id = request.form.get("etkinlik_e_id")
+            metin = request.form.get("metin")
+            pushdate = time.strftime('%Y-%m-%d %H:%M:%S')
+            save_sikayet(eden_k_id, sikayet_k_id, etkinlik_e_id, metin, pushdate)
+
+    db = DBSession()
+    items = db.execute('SELECT * FROM etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=1 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    yer = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=7 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    sehir = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=9 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    ucret = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=3 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    harita = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE etkinlik.e_id = ' + str(id) + ' AND etkinlik.e_id=etkinlik_özellik.e_id AND özellik_id=10 AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id')
+    yorum = db.execute('SELECT * FROM yorum,etkinlik,users WHERE yorum.e_id=etkinlik.e_id and etkinlik.e_id= ' + str(id) + ' AND users."userId"= yorum.k_id')
+    db.close()
+
+    return render_template("profil_etkinlikDuvarı.html",items = items,tarih=tarih,yer = yer , sehir = sehir , ucret = ucret,harita =harita,yorum=yorum)
+
+def save_yorum(k_id, e_id, message ,pushdate):
+    db = DBSession()
+    yorum = Yorum(k_id=k_id, e_id=e_id, yorumMetni=message, yorumTarihi=pushdate)
+    db.add(yorum)
+    db.commit()
+    db.close()
+
+def save_sikayet(eden_k_id, sikayet_k_id, etkinlik_e_id, metin, pushdate):
+    db = DBSession()
+    sikayet = Sikayet(sikayet_eden_id=eden_k_id, k_id=sikayet_k_id, e_id=etkinlik_e_id, sikayetMetni=metin, sikayetTarihi=pushdate,deger=0)
+    db.add(sikayet)
     db.commit()
     db.close()

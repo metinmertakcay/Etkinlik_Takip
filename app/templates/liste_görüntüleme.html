@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+  <head>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/static/css/style.css">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+      <title>Etkinlik.com</title>
+  </head>
+    <title>Etkinlik.com</title>
+    
+  </head>
+  <body>
+    
+
+   <div class="container">
+      <header>
+       <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
+      <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Anasayfa <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Kategoriler
+            </a>
+            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/liste/1">Kültürel Etkinlikler</a>
+              <a class="dropdown-item" href="/liste/2">Sempozyumlar</a>
+              <a class="dropdown-item" href="/liste/3">Promosyonlar</a>
+              <a class="dropdown-item" href="/liste/4">Burslar</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('iletisim') }}">İletişim</a>
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="registration.html" style="padding-right: 20px"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
+          <li class="nav-item dropdown " style="padding-right: 20px">
+            <a href="#"  data-toggle="dropdown" ><span><i class="fas fa-sign-in-alt"></i></span>
+              Giriş
+            </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdown" style="width: 320px">
+                <!-- Material form login -->
+                <!--Header-->
+                        <div class=" deep-blue-gradient rounded " style="height: 90px; padding: 10px;width: 300px;margin-left:10px;margin-top: 5px;">
+                            <h3 class="text-center mt-3 text-white"><i class="fa fa-lock"></i> Giriş:</h3>
+                        </div>
+                
+                <form style="padding: 10px;">
+                
+
+                     <div class="form-group row mt-3">
+                            <label for="inputEmail" class="col-1 col-form-label"><i class="fa fa-envelope  text-secondary pb-2"></i></label>
+                            <div class="col-10">
+                              <input type="email" class="form-control" id="inputEmail" placeholder="Email" style="">
+                            </div>
+                     </div>        
+
+                    <!-- Material input password -->
+                    <div class="form-group row mb-1">
+                       <label for="InputPassword" class="col-1 col-form-label"><i class="fa fa-lock prefix text-secondary pb-2"></i></label>
+                       <div class="col-10">
+                        <input type="password" id="Inputpassword" class="form-control" placeholder="Şifre">
+                        </div>
+                    </div>
+                    
+                    <div class="form-check pl-5 pt-1">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label text-secondary" for="exampleCheck1">Beni Hatırla</label>
+                      </div>
+                    
+                        <div class="text-center mt-4 mb-4">
+                            <button class="btn warm-flame-gradient text-white" type="submit">Giriş</button>
+                        </div>
+                    <p class="text-right" style="padding-right: 5% ">Şifreni mi <a href="#">unuttun?</a>
+                    </p>
+                    
+                    
+                </form>
+                      
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+     </header>
+      </div>    
+    <div style="margin-top: 70px"></div>  
+    
+    <div class="container" >
+        <div class="col-lg-12 col-sm-11">
+               
+               <ul class="list-group">
+              <li class="list-group-item font-weight-bold mb-3" style="background-color:forestgreen;color: white">Sonuçlar</li>
+  
+                </ul>
+                <div class="table-responsive">
+                <table class="table">
+                      <thead>
+                        <tr>
+                            
+                          <th scope="col pl-5"><a href="#"><div class="saga">Etkinlik<i class="fas fa-angle-down pl-1"></i></div></a></th>
+                          <th scope="col"><a href="#">Tarih<i class="fas fa-angle-down pl-1"></i></a></th>
+                          <th scope="col"><a href="#">Yer<i class="fas fa-angle-down pl-1"></i></a></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                            {% for item,i in items2 %}
+
+                                    <tr>
+                                      <td><a href="/etkinlik/{{item.e_id}}"><img class="resim" src="/static/img/{{item.etkinlikBilgi}}">{{ item.etkinlikAdı }}</a></td>
+                                      <td><div class="bolum">
+                                        {{ item.bilgi }}
+                                      </div></td>
+                                      <td><div class="bolum">{{ i.bilgi }}</div></td>
+                                    </tr>
+
+                            {% endfor %}
+
+
+                      </tbody>
+                </table>
+                </div>
+            </div>
+
+    </div>
+    
+      <footer class="page-footer font-small stylish-color-dark pt-3">
+      
+          <!--Footer Links-->
+          <div class="container text-center text-md-left">
+              <div class="row">
+                 
+                  <div class="col-md-4">
+                      <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Bu Haftasonu</h5>
+                      <p>Üzgünüz, bölgenizde bu hafta sonu etkinlik bulunmuyor. 
+                         Bölgenizi değiştirmeyi deneyin.</p>
+                  </div>
+      
+                  <hr class="clearfix w-100 d-md-none">
+      
+                  <div class="col-md-2 mx-auto">
+                      <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">YARDIM</h5>
+                      <ul class="list-unstyled">
+                          <li><a href="{{url_for('iletisim') }}">Bize Ulaşın</a></li>
+                      </ul>
+                  </div>
+      
+                  <hr class="clearfix w-100 d-md-none">
+      
+                  <div class="col-md-2 mx-auto">
+                      <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">HAKKIMIZDA</h5>
+                      <ul class="list-unstyled">
+                          <li><a href="{{ url_for('hakkımızda') }}">Biz Kimiz?</a></li>
+                      </ul>
+                  </div>
+                  <hr class="clearfix w-100 d-md-none">
+      
+                  
+              </div>
+          </div>
+          <!--/.Footer Links-->
+                     
+            <!--Social buttons-->
+          <div class="text-center border-top pt-4">
+              <ul class="list-unstyled list-inline">
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1"><i class="fab fa-facebook-f fa-2x"></i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1"><i class="fab fa-twitter fa-2x"></i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-gplus mx-1"><i class="fab fa-google-plus fa-2x"> </i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1"><i class="fab fa-linkedin fa-2x"> </i></a></li>
+                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-dribbble mx-1"><i class="fab fa-dribbble fa-2x"> </i></a></li>
+              </ul>
+          </div>
+          <!--/.Social buttons-->
+      
+          <!--Copyright-->
+          <div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
+              <div class="container-fluid">
+                  © 2018 Copyright: <a href="#"> Yıldız Teknik Üniversitesi </a>
+      
+              </div>
+          </div>
+          <!--/.Copyright-->    
+      </footer>
+   
+   
+     <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+  </body>
+</html>

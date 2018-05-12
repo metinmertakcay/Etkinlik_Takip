@@ -3,12 +3,11 @@ class sınıfIsmi(Base) ile veritabanı tablosu oluşturulabilir.
 __tablename__ = tabloIsmi ile birlikte eğer tablo yok ise oluşturulur, varsa sadece bağlantı sağlanır.
 Ger kalan işlemler postgresql de olduğu gibi veri tabanı kolonlarının oluşturulma işlemi gerçekleştirilir.
 NOT: User adı ile belirtilmiş olan veritabnı tablosunda çeşitli değişiklikler yapışacaktır. Communication sınıfına bakarak işlemlerinizi yapabilirsiniz."""
-from config import DB_URI
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean
-from sqlalchemy.types import DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy import create_engine
+from config import DB_URI
 from uuid import uuid4
 from time import time
 
@@ -147,6 +146,171 @@ class Interest(Base):
         return {
             'id' : self.id,
             'interestName' : self.interestName
+        }
+
+class Etkinlik(Base):
+    __tablename__ = 'etkinlik'
+
+    e_id = Column(Integer, primary_key=True, autoincrement = True)
+    etklinlikTipi = Column(String(30), nullable=False)
+    etkinlikAdı = Column(String(100), nullable=False)
+    etkinlikAcıklaması = Column(String(1000), nullable=False)
+    iletisimBilgileri = Column(String(200))
+    yıldızPuanToplamı = Column(Integer, nullable=False)
+    yıldızVerenSayısı = Column(Integer, nullable=False)
+    banlanmısMı = Column(Integer, default=0, nullable=False)
+    tarih = Column(DateTime, nullable=False)
+    yayınlayan = Column(Integer, nullable=False)
+
+    def to_dict(self):
+        return {
+            'e_id': self.e_id,
+            'etklinlikTipi': self.etklinlikTipi,
+            'etkinlikAdı': self.etkinlikAdı,
+            'etkinlikAcıklaması': self.etkinlikAcıklaması,
+            'iletisimBilgileri': self.iletisimBilgileri,
+            'yıldızPuanToplamı': self.yıldızPuanToplamı,
+            'yıldızVerenSayısı': self.yıldızVerenSayısı,
+            'banlanmısMı': self.banlanmısMı,
+            'tarih': self.tarih,
+            'yayınlayan': self.yayınlayan
+        }
+
+class EtkinlikResim(Base):
+    __tablename__ = 'etkinlikResim'
+
+    etk_resim_id = Column(Integer, primary_key=True, autoincrement = True)
+    etkinlikBilgi = Column(String(60), nullable=False)
+
+    def to_dict(self):
+        return {
+            'etk_resim_id': self.etk_resim_id,
+            'etkinlikBilgi': self.etkinlikBilgi
+        }
+
+class EtkinlikTipi(Base):
+    __tablename__ = 'etkinlikTipi'
+
+    tip_id = Column(Integer, primary_key=True)
+    tipAdı = Column(String(30), nullable=False)
+
+    def to_dict(self):
+        return {
+            'tip_id': self.tip_id,
+            'tipAdı': self.tipAdı
+        }
+
+class Özellik(Base):
+    __tablename__ = 'özellik'
+
+    özellik_id = Column(Integer, primary_key=True)
+    özellikBilgi = Column(String(30), nullable=False)
+
+    def to_dict(self):
+        return {
+            'özellik_id': self.özellik_id,
+            'özellikBilgi': self.özellikBilgi
+        }
+
+class Sikayet(Base):
+    __tablename__ = 'sikayet'
+
+    sikayet_id = Column(Integer, primary_key=True, autoincrement = True)
+    sikayet_eden_id = Column(Integer, ForeignKey("kullanıcı.k_id", onupdate='CASCADE', ondelete='CASCADE'))
+    k_id = Column(Integer, ForeignKey("kullanıcı.k_id", onupdate='CASCADE', ondelete='CASCADE'))
+    e_id = Column(Integer, ForeignKey("etkinlik.e_id", onupdate='CASCADE', ondelete='CASCADE'))
+    sikayetMetni = Column(String(200), nullable=False)
+    sikayetTarihi = Column(DateTime, nullable=False)
+    deger = Column(Integer)
+
+    def __init__(self, sikayet_eden_id, k_id, e_id, sikayetMetni, sikayetTarihi,deger):
+        self.sikayet_eden_id = sikayet_eden_id
+        self.k_id = k_id
+        self.e_id = e_id
+        self.sikayetMetni = sikayetMetni
+        self.sikayetTarihi = sikayetTarihi
+        self.deger = deger
+
+    def to_dict(self):
+        return {
+            'sikayet_id': self.sikayet_id,
+            'sikayet_eden_id': self.sikayet_eden_id,
+            'k_id': self.k_id,
+            'e_id': self.e_id,
+            'sikayetBaslık': self.sikayetBaslık,
+            'sikayetTarihi': self.sikayetTarihi
+        }
+
+class Yorum(Base):
+    __tablename__ = 'yorum'
+
+    yorum_id = Column(Integer, primary_key=True, autoincrement=True)
+    k_id = Column(Integer, ForeignKey("kullanıcı.k_id", onupdate='CASCADE', ondelete='CASCADE'))
+    e_id = Column(Integer, ForeignKey("etkinlik.e_id", onupdate='CASCADE', ondelete='CASCADE'))
+    yorumMetni = Column(String(30), nullable=False)
+    yorumTarihi = Column(DateTime, nullable=False)
+
+    def __init__(self, k_id, e_id, yorumMetni, yorumTarihi):
+        self.k_id = k_id
+        self.e_id = e_id
+        self.yorumMetni = yorumMetni
+        self.yorumTarihi = yorumTarihi
+
+    def to_dict(self):
+        return {
+            'yorum_id': self.yorum_id,
+            'k_id': self.k_id,
+            'e_id': self.e_id,
+            'yorumMetni': self.yorumMetni,
+            'yorumTarihi': self.sikayetTarihi
+        }
+
+class EtkinlikÖzellik(Base):
+    __tablename__ = 'etkinlik_özellik'
+
+    id = Column(Integer, primary_key=True, autoincrement = True)
+    e_id = Column(Integer, ForeignKey("etkinlik.e_id", onupdate='CASCADE', ondelete='CASCADE'))
+    özellik_id = Column(Integer, ForeignKey("özellik.özellik_id", onupdate='CASCADE', ondelete='CASCADE'))
+    bilgi = Column(String(50), nullable=False)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'e_id': self.e_id,
+            'özellik_id': self.özellik_id,
+            'bilgi': self.bilgi
+        }
+
+class EtkinlikResimleri(Base):
+    __tablename__ = 'etkinlik_resim'
+
+    id = Column(Integer, primary_key=True)
+    resim_id = Column(Integer, ForeignKey("etkinlikResim.etk_resim_id", onupdate='CASCADE', ondelete='CASCADE'))
+    e_id = Column(Integer, ForeignKey("etkinlik.e_id", onupdate='CASCADE', ondelete='CASCADE'))
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'resim_id': self.resim_id,
+            'e_id': self.e_id
+        }
+
+class Admin(Base):
+    __tablename__ = 'admin'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    mail = Column(String(40), nullable=False)
+    password = Column(String(100), nullable=False)
+
+    def __init__(self, mail, password):
+        self.mail = mail
+        self.password = password
+
+    def to_dict(self):
+        return{
+            'id': self.id,
+            'mail': self.mail,
+            'password': self.password
         }
 
 # local veritabanı

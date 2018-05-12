@@ -6,7 +6,7 @@ import os
 
 DEBUG = True
 SECRET_KEY = os.urandom(24)
-DB_URI = 'postgresql://postgres:admin@localhost/activity'
+DB_URI = 'postgresql://postgres:admin@localhost/act'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 MAIL_SERVER = 'smtp.gmail.com'
 MAIL_PORT = 587

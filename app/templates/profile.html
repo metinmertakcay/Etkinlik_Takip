@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+
+
+	<link rel="stylesheet" href="bs/css/bootstrap.min.css">
+	<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+
+
+	<style type="text/css">
+
+	div.mart{
+		margin-top: 80px;
+	}
+
+	div.pad{
+		padding: 20px;
+	}
+
+	div.marl{
+		margin-left: 20px;
+	}
+</style>
+
+
+<title>Etkinlik.com</title>
+</head>
+<body>
+
+
+	<div class="container" >
+		<header>
+			<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
+				<a class="navbar-brand" href="#"><img src="img/etkinlik_logo1.jpg" width="40" height="40"></a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+						<li class="nav-item active">
+							<a class="nav-link" href="/">Anasayfa <span class="sr-only">(current)</span></a>
+						</li>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Kategoriler
+							</a>
+							<div class="dropdown-menu " aria-labelledby="navbarDropdown">
+								<a class="dropdown-item" href="/liste/1">Kültürel Etkinlikler</a>
+								<a class="dropdown-item" href="/liste/2">Sempozyumlar</a>
+								<a class="dropdown-item" href="/liste/3">Promosyonlar</a>
+								<a class="dropdown-item" href="/liste/4">Burslar</a>
+							</div>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link " href="{{ url_for('iletisim') }}">İletişim</a>
+						</li>
+					</ul>
+
+					<ul class="nav navbar-nav navbar-right">
+						<li><a class="pr-3" href="profile.html"><span><i class="fas fa-user"></i></span> Profilim </a></li>
+						<li class="nav-item dropdown " >
+							<a href="#" class="pr-3" data-toggle="dropdown" ><span><i class="fas fa-sign-in-alt"></i></span>
+								Çıkış
+							</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</header>
+	</div>   
+
+
+
+
+
+
+	<div class="container mart">
+		<div class="row mt-4">
+			<div class="col-md-4" align="center">
+
+				<img  src="http://via.placeholder.com/250x250"  width="304" height="236" alt="Profile Photo">
+				<h3 class="mt-4">Kullanıcı Adı </h1>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+						tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+						quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+						consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+						cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+					proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					<br/>
+
+
+				</div>
+
+
+				<div class="col-md-6 mx-auto pad " align="center">
+					<div class="btn-group ">
+						<button type="button" class="btn btn-info">Hareket Geçmişi</button>
+						<button type="button" class="btn btn-info">Katıldığı Etkinlikler</button>
+						<button type="button" class="btn btn-info">Oluşturduğu Etkinlikler</button>
+					</div>
+
+					<div class="card mt-4">
+						<div class="card-body">
+							<h4>Kullanıcı Adı  etkinlik adlı etkinliğe katıldı</h4>
+							<p class="card-text">
+								<h5>Etkinlik Adı</h5>
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</p>
+
+						</div>
+					</div>
+					
+					<div class="card mt-4">
+						<div class="card-body">
+							<h4>Kullanıcı Adı  etkinlik adlı etkinliğe yorum yaptı</h4>
+							<p class="card-text">
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</p>
+
+						</div>
+					</div>
+					<div class="card mt-4">
+						<div class="card-body">
+							<h4>Kullanıcı Adı  etkinlik adlı etkinliğe puan verdi.</h4>
+							<img src="img/star.png" width="30px"><img src="img/star.png" width="30px"><img src="img/star.png" width="30px"><img src="img/star.png" width="30px"><img src="img/star.png" width="30px">
+
+						</div>
+					</div>
+					<div class="card mt-4">
+						<div class="card-body">
+							<h4>Kullanıcı Adı  etkinlik adlı etkinliği oluşturdu</h4>
+							<p class="card-text">
+								<h5>Etkinlik Adı</h5>
+
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+								tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+								quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+								consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+								cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+								proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</p>
+
+						</div>
+					</div>
+					
+
+				</div>
+			</div>
+
+		</div>
+
+
+
+
+		<footer class="page-footer font-small stylish-color-dark pt-3">
+
+			<!--Footer Links-->
+			<div class="container text-center text-md-left">
+				<div class="row">
+
+					<div class="col-md-4">
+						<h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Bu Haftasonu</h5>
+						<p>Üzgünüz, bölgenizde bu hafta sonu etkinlik bulunmuyor. 
+						Bölgenizi değiştirmeyi deneyin.</p>
+					</div>
+
+					<hr class="clearfix w-100 d-md-none">
+
+					<div class="col-md-2 mx-auto">
+						<h5 class="text-uppercase mb-4 mt-3 font-weight-bold">YARDIM</h5>
+						<ul class="list-unstyled">
+							<li><a href= "{{url_for('iletisim') }}">Bize Ulaşın</a></li>
+						</ul>
+					</div>
+
+					<hr class="clearfix w-100 d-md-none">
+
+					<div class="col-md-2 mx-auto">
+						<h5 class="text-uppercase mb-4 mt-3 font-weight-bold">HAKKIMIZDA</h5>
+						<ul class="list-unstyled">
+							<li><a href="{{ url_for('hakkımızda') }}">Biz Kimiz?</a></li>
+						</ul>
+					</div>
+					<hr class="clearfix w-100 d-md-none">
+
+
+				</div>
+			</div>
+			<!--/.Footer Links-->
+
+			<!--Social buttons-->
+			<div class="text-center border-top pt-4">
+				<ul class="list-unstyled list-inline">
+					<li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1"><i class="fab fa-facebook-f fa-2x"></i></a></li>
+					<li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1"><i class="fab fa-twitter fa-2x"></i></a></li>
+					<li class="list-inline-item"><a class="btn-floating btn-sm btn-gplus mx-1"><i class="fab fa-google-plus fa-2x"> </i></a></li>
+					<li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1"><i class="fab fa-linkedin fa-2x"> </i></a></li>
+					<li class="list-inline-item"><a class="btn-floating btn-sm btn-dribbble mx-1"><i class="fab fa-dribbble fa-2x"> </i></a></li>
+				</ul>
+			</div>
+			<!--/.Social buttons-->
+
+			<!--Copyright-->
+			<div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
+				<div class="container-fluid">
+					© 2018 Copyright: <a href="#"> Yıldız Teknik Üniversite </a>
+
+				</div>
+			</div>
+			<!--/.Copyright-->    
+		</footer>
+
+
+		<!-- Optional JavaScript -->
+		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="bs/js/bootstrap.min.js"></script>
+	</body>
+	</html>
