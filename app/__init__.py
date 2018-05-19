@@ -446,21 +446,22 @@ def route_sikayet1(deger):
 def route_liste(id):
     db = DBSession()
 
-    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=9 OR özellik_id=1  AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.tarih >= current_date  AND etkinlik.e_id = etkinlik_resim.e_id  AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.tarih >= current_date  AND etkinlik.e_id = etkinlik_resim.e_id  AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=1 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.tarih >= current_date  AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
     db.close()
 
-    return render_template("liste_görüntüleme.html", items=items)
+    return render_template("liste_görüntüleme.html", items=items,tarih=tarih,items2=zip(tarih,items))
 
 @app.route('/pliste/<int:id>', methods=['GET'])
 def route_pliste(id):
     if session.get('userid') is None:
         return redirect("/liste/" + str(id))
-
     db = DBSession()
-    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=9 OR özellik_id=1  AND etkinlik.e_id = etkinlik_özellik.e_id  and tarih>=current_date  AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    items = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id  and tarih>=current_date  AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
+    tarih = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE "etklinlikTipi" = ' + str(id) + ' AND özellik_id=1 AND etkinlik.e_id = etkinlik_özellik.e_id  AND etkinlik.e_id = etkinlik_resim.e_id AND etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id order by etkinlik.e_id asc')
     db.close()
 
-    return render_template("profil_liste_görüntüleme.html",items=items,email=session['email'],id=session.get('userid'))
+    return render_template("profil_liste_görüntüleme.html", items=items,tarih=tarih,items2=zip(tarih,items),email=session['email'],id=session.get('userid'))
 
 @app.route('/liste', methods=['GET'])
 def route_list():

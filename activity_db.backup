@@ -1,0 +1,1170 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.23
+-- Dumped by pg_dump version 9.2.23
+-- Started on 2018-05-19 18:36:11
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 2054 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 169 (class 1259 OID 46657)
+-- Name: aboutus; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE aboutus (
+    id integer NOT NULL,
+    name character varying(30) NOT NULL,
+    surname character varying(20) NOT NULL,
+    image character varying(100) NOT NULL,
+    about character varying(200) NOT NULL,
+    facebook character varying(100),
+    twitter character varying(100),
+    linkedin character varying(100)
+);
+
+
+ALTER TABLE public.aboutus OWNER TO postgres;
+
+--
+-- TOC entry 170 (class 1259 OID 46663)
+-- Name: aboutus_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE aboutus_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.aboutus_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2055 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: aboutus_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE aboutus_id_seq OWNED BY aboutus.id;
+
+
+--
+-- TOC entry 171 (class 1259 OID 46665)
+-- Name: admin; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE admin (
+    id integer NOT NULL,
+    mail character varying(40) NOT NULL,
+    password character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.admin OWNER TO postgres;
+
+--
+-- TOC entry 172 (class 1259 OID 46668)
+-- Name: admin_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE admin_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.admin_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2056 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: admin_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE admin_id_seq OWNED BY admin.id;
+
+
+--
+-- TOC entry 173 (class 1259 OID 46670)
+-- Name: communication; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE communication (
+    id integer NOT NULL,
+    name character varying(30) NOT NULL,
+    email character varying(50) NOT NULL,
+    phone character varying(11) NOT NULL,
+    message character varying(400) NOT NULL,
+    ipaddress character varying(15) NOT NULL,
+    pushdate timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.communication OWNER TO postgres;
+
+--
+-- TOC entry 174 (class 1259 OID 46676)
+-- Name: communication_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE communication_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.communication_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2057 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: communication_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE communication_id_seq OWNED BY communication.id;
+
+
+--
+-- TOC entry 175 (class 1259 OID 46678)
+-- Name: etkinlik; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE etkinlik (
+    e_id integer NOT NULL,
+    "etklinlikTipi" integer NOT NULL,
+    "etkinlikAdı" character varying NOT NULL,
+    "etkinlikAcıklaması" character varying NOT NULL,
+    "iletisimBilgileri" character varying NOT NULL,
+    "yıldızPuanToplamı" real NOT NULL,
+    "yıldızVerenSayısı" integer NOT NULL,
+    "banlanmısMı" integer NOT NULL,
+    tarih date,
+    "yayınlayan" integer
+);
+
+
+ALTER TABLE public.etkinlik OWNER TO postgres;
+
+--
+-- TOC entry 176 (class 1259 OID 46684)
+-- Name: etkinlikResim; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "etkinlikResim" (
+    etk_resim_id integer NOT NULL,
+    "etkinlikBilgi" character varying(50) NOT NULL
+);
+
+
+ALTER TABLE public."etkinlikResim" OWNER TO postgres;
+
+--
+-- TOC entry 177 (class 1259 OID 46687)
+-- Name: etkinlikTipi; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "etkinlikTipi" (
+    tip_id integer NOT NULL,
+    "tipAdı" character varying(30) NOT NULL
+);
+
+
+ALTER TABLE public."etkinlikTipi" OWNER TO postgres;
+
+--
+-- TOC entry 178 (class 1259 OID 46690)
+-- Name: etkinlik_resim; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE etkinlik_resim (
+    e_id integer NOT NULL,
+    resim_id integer NOT NULL
+);
+
+
+ALTER TABLE public.etkinlik_resim OWNER TO postgres;
+
+--
+-- TOC entry 179 (class 1259 OID 46693)
+-- Name: etkinlik_özellik; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "etkinlik_özellik" (
+    e_id integer NOT NULL,
+    "özellik_id" integer NOT NULL,
+    bilgi character varying NOT NULL
+);
+
+
+ALTER TABLE public."etkinlik_özellik" OWNER TO postgres;
+
+--
+-- TOC entry 180 (class 1259 OID 46699)
+-- Name: interest; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE interest (
+    id integer NOT NULL,
+    "interestName" character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.interest OWNER TO postgres;
+
+--
+-- TOC entry 181 (class 1259 OID 46702)
+-- Name: interest_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE interest_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.interest_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2058 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: interest_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE interest_id_seq OWNED BY interest.id;
+
+
+--
+-- TOC entry 182 (class 1259 OID 46704)
+-- Name: sikayet; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE sikayet (
+    sikayet_eden_id integer NOT NULL,
+    k_id integer NOT NULL,
+    e_id integer NOT NULL,
+    "sikayetMetni" character varying NOT NULL,
+    "sikayetTarihi" date NOT NULL,
+    sikayet_id integer NOT NULL,
+    deger integer
+);
+
+
+ALTER TABLE public.sikayet OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 46710)
+-- Name: sikayet_sikayet_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE sikayet_sikayet_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.sikayet_sikayet_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2059 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: sikayet_sikayet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE sikayet_sikayet_id_seq OWNED BY sikayet.sikayet_id;
+
+
+--
+-- TOC entry 184 (class 1259 OID 46712)
+-- Name: userinterest; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE userinterest (
+    id integer NOT NULL,
+    userid integer,
+    interestid integer
+);
+
+
+ALTER TABLE public.userinterest OWNER TO postgres;
+
+--
+-- TOC entry 185 (class 1259 OID 46715)
+-- Name: userinterest_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE userinterest_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.userinterest_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2060 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: userinterest_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE userinterest_id_seq OWNED BY userinterest.id;
+
+
+--
+-- TOC entry 186 (class 1259 OID 46717)
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE users (
+    userid integer NOT NULL,
+    name character varying(20) NOT NULL,
+    surname character varying(20) NOT NULL,
+    birtdate timestamp without time zone,
+    city character varying(14) NOT NULL,
+    gender character varying(1) NOT NULL,
+    password character varying(100) NOT NULL,
+    email character varying(40),
+    publicid character varying(50),
+    validation boolean NOT NULL,
+    image character varying(50)
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- TOC entry 187 (class 1259 OID 46720)
+-- Name: users_userid_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE users_userid_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_userid_seq OWNER TO postgres;
+
+--
+-- TOC entry 2061 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: users_userid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE users_userid_seq OWNED BY users.userid;
+
+
+--
+-- TOC entry 188 (class 1259 OID 46722)
+-- Name: yorum; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE yorum (
+    k_id integer NOT NULL,
+    e_id integer NOT NULL,
+    "yorumMetni" character varying NOT NULL,
+    "yorumTarihi" date NOT NULL,
+    yorum_id integer NOT NULL
+);
+
+
+ALTER TABLE public.yorum OWNER TO postgres;
+
+--
+-- TOC entry 189 (class 1259 OID 46728)
+-- Name: yorum_yorum_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE yorum_yorum_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.yorum_yorum_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2062 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: yorum_yorum_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE yorum_yorum_id_seq OWNED BY yorum.yorum_id;
+
+
+--
+-- TOC entry 190 (class 1259 OID 46730)
+-- Name: özellik; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE "özellik" (
+    "özellik_id" integer NOT NULL,
+    "özellikBilgi" character varying NOT NULL
+);
+
+
+ALTER TABLE public."özellik" OWNER TO postgres;
+
+--
+-- TOC entry 1883 (class 2604 OID 46736)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY aboutus ALTER COLUMN id SET DEFAULT nextval('aboutus_id_seq'::regclass);
+
+
+--
+-- TOC entry 1884 (class 2604 OID 46737)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY admin ALTER COLUMN id SET DEFAULT nextval('admin_id_seq'::regclass);
+
+
+--
+-- TOC entry 1885 (class 2604 OID 46738)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY communication ALTER COLUMN id SET DEFAULT nextval('communication_id_seq'::regclass);
+
+
+--
+-- TOC entry 1886 (class 2604 OID 46739)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY interest ALTER COLUMN id SET DEFAULT nextval('interest_id_seq'::regclass);
+
+
+--
+-- TOC entry 1887 (class 2604 OID 46740)
+-- Name: sikayet_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY sikayet ALTER COLUMN sikayet_id SET DEFAULT nextval('sikayet_sikayet_id_seq'::regclass);
+
+
+--
+-- TOC entry 1888 (class 2604 OID 46741)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY userinterest ALTER COLUMN id SET DEFAULT nextval('userinterest_id_seq'::regclass);
+
+
+--
+-- TOC entry 1889 (class 2604 OID 46742)
+-- Name: userid; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY users ALTER COLUMN userid SET DEFAULT nextval('users_userid_seq'::regclass);
+
+
+--
+-- TOC entry 1890 (class 2604 OID 46743)
+-- Name: yorum_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY yorum ALTER COLUMN yorum_id SET DEFAULT nextval('yorum_yorum_id_seq'::regclass);
+
+
+--
+-- TOC entry 2025 (class 0 OID 46657)
+-- Dependencies: 169
+-- Data for Name: aboutus; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY aboutus (id, name, surname, image, about, facebook, twitter, linkedin) FROM stdin;
+2	Metin Mert	Akçay	/static/img/metin.jpeg	1996 doğumlu, Yıldız Teknik Üniversitesi 3. sınıf öğrencisidir	https://www.facebook.com/metinmert.akcay	#	https://www.linkedin.com/in/metin-mert-ak%C3%A7ay-25120715a/
+3	Murat	Seymen	/static/img/murat.jpg	1996 doğumlu, Yıldız Teknik Üniversitesi 3. sınıf öğrencisidir	https://www.facebook.com/murat.seymen.35	#	https://www.linkedin.com/in/murat-seymen-886720159/
+1	Aslıhan	Ilgaz	http://placehold.it/600x600	1996 doğumlu, Yıldız Teknik Üniversitesi 3. sınıf öğrencisidir	https://www.facebook.com/profile.php?id=100000290109058	https://twitter.com/llneverdie	https://www.linkedin.com/in/asl%C4%B1han-ilgaz-38a909122/
+\.
+
+
+--
+-- TOC entry 2063 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: aboutus_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('aboutus_id_seq', 1, false);
+
+
+--
+-- TOC entry 2027 (class 0 OID 46665)
+-- Dependencies: 171
+-- Data for Name: admin; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY admin (id, mail, password) FROM stdin;
+1	modul.etkinlik@gmail.com	pbkdf2:sha256:50000$VbsMpHW9$ce20f62098e64b634e2325ddc61d02afe7a2d066db209a9848b94e4c90b97eaa
+\.
+
+
+--
+-- TOC entry 2064 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: admin_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('admin_id_seq', 1, false);
+
+
+--
+-- TOC entry 2029 (class 0 OID 46670)
+-- Dependencies: 173
+-- Data for Name: communication; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY communication (id, name, email, phone, message, ipaddress, pushdate) FROM stdin;
+1	Metin Mert Akçay 	metinmertakcayhpalytu@gmail.com	05392119557	Merhaba dünya	192.168.100.2	2018-05-03 01:11:44
+2	Ali	ali@gmail.com	05964102851	Merhaba Dünya	192.168.100.2	2018-05-06 12:14:47
+\.
+
+
+--
+-- TOC entry 2065 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: communication_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('communication_id_seq', 1, true);
+
+
+--
+-- TOC entry 2031 (class 0 OID 46678)
+-- Dependencies: 175
+-- Data for Name: etkinlik; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY etkinlik (e_id, "etklinlikTipi", "etkinlikAdı", "etkinlikAcıklaması", "iletisimBilgileri", "yıldızPuanToplamı", "yıldızVerenSayısı", "banlanmısMı", tarih, "yayınlayan") FROM stdin;
+16	2	23. Pazarlama Kongresi\t	23. Pazarlama Kongresi 28-30 Haziran 2018 tarihlerinde Kocaeli Üniversitesi İktisadi ve İdari Bilimler Fakültesi İşletme Bölümü ev sahipliğinde düzenlenecektir. Her sene önemli konuları gündemine alarak pazarlama alanına değerli çalışmalarla katkıda bulunan kongremiz için yine oldukça güncel bir konuya vurgu yapmak istedik. Son zamanlarda iş dünyasında ve birçok alanda çok konuşulan Endüstri 4.0’ı ve beraberinde getirdiği uygulamaları pazarlama dünyası açısından ele almayı amaçladık.\r\nBilindiği üzere, çağımızın yeni endüstriyel vizyonu Endüstri 4.0 dördüncü sanayi devrimi olarak tanımlanmaktadır. Bu yeni endüstrideki amaç; uyum, kaynak verimliliği ve ergonominin hem müşteriler hem de iş ortaklarının entegrasyonunu içermektedir. Endüstri 4.0 birçok çağdaş otomasyon sistemlerini, veri alışverişlerini ve üretim teknolojilerini içeren kolektif bir terimdir. Bu devrim ile modüler yapılı akıllı fabrikalar kapsamında fiziksel işlemleri siber-fiziksel sistemlerle izlemek, fiziksel dünyanın sanal bir kopyasını oluşturmak ve merkezi olmayan kararların verilmesi hedeflenmektedir. Böylece, nesnelerin interneti ile siber fiziksel sistemler, birbirleri ve insanlarla gerçek zamanlı olarak iletişime geçip işbirliği içinde çalışabileceklerdir. Hizmetlerin interneti ile hem iç hem de çapraz örgütsel hizmetler sunulacak böylece, insanların ve akıllı fabrikaların birbirleri ile iletişim kurması sağlanacaktır.\r\nEndüstri 4.0 pazarlama açısından firmalarla müşteriler arasında çevrimiçi ve çevrimdışı etkileşimleri birleştiren bir yaklaşım olarak nitelendirilebilir. Bu bağlamda, Endüstri 4.0 pazarlamanın verimliliğini artırmak için makineden makineye bağlanabilirliği sağlarken diğer yandan insandan insana bağlanabilirlik olanağını sağlayarak müşteri katılımını artırmaktadır. Teknolojinin hızı ile markalar daha esnek ve uyumlu olmaya zorlanırken, pazara ürün sürme süreci ise oldukça kısalmaktadır.\r\nPazarlamanın birçok alanını etkileyen Endüstri 4.0’ı ve bu devrimin daha da ötesini tartışmaya açtığımız kongremize göndereceğiniz değerli çalışmalarınız ve katılımınızı bekliyor, Kocaeli’nde buluşmak ümidiyle sevgi ve saygılarımızı sunuyoruz.\r\n	0856 868 48 48	3	2	0	2018-06-28	6
+12	4	Yeşilay Yüksek Lisans ve Doktora Burs Başvuruları	Yeşilay, üniversitelerde, enstitülerde ve araştırma merkezlerinde tütün-sigara, alkol, uyuşturucu madde, teknoloji, kumar ve diğer bağımlılık türleri ile ilgili tez çalışması yapacak ve Yeşilay’ın bağımlılık çalışma alanlarına katkıda bulunacak Yüksek Lisans ve Doktora öğrencilerine burs desteği sağlıyor. Son başvuru tarihi 4 Mayıs 2018!	0534 455 86 96	5	5	0	2018-06-01	5
+13	4	Unaoc Burs Programı	UNAOC (Birleşmiş Milletler Medeniyetler İttifakı) burs programının 2018 yılı teması “gençlerin aşırı şiddete karşı ve sürdürülebilir barışın inşasına katkı yapmalarını” teşvik etmek olarak belirlenmiştir. Programda kültürel farklılığın yerel ortak ve aktörlerin katılımı ile ele alınması planlanmaktadır.	0232 458 87 41	4	2	0	2018-04-20	5
+9	2	Uluslararası Matbaa Teknolojileri Sempozyumu	On beşinci yılını kutlayan Uluslararası Matbaa Teknolojileri Sempozyumunun altıncısı İstanbul Üniversitesi himayesinde 1-3 Kasım 2018 tarihleri arasında İstanbul’da gerçekleştirilecektir.\r\n6. Uluslararası Matbaa Teknolojileri Sempozyumu’na akademik çalışmalarınızla ya da dinleyici olarak katılımınız bizleri onurlandıracaktır.\r\n	0523 158 48 56	0	0	0	2018-11-01	3
+15	1	Gelin Tanış Olalım	Ülkemizin yaşadığı gerginlik ve kutuplaşmalara karşı en anlamlı çağrılardan birisi ünlü oyuncu Fırat Tanış’tan “Gelin Tanış Olalım”, izleyicisiyle buluşmaya devam ediyor.	0541 258 86 96	4	1	0	2018-05-21	6
+2	1	Fenerbahçe – Beşiktaş Futbol Maçı	Fenerbahçe – Beşiktaş Türkiye Kupası 2.Maçı	0224  658 48 96	4	1	0	2018-05-26	1
+7	2	Innovation and Global Issues in Social Sciences III 	Innovation and Global Issues in Social Sciences III “InGlobe” çatısı altında akademisyenler, bürokratlar ve sivil toplum kuruşları tarafından oluşturulan bağımsız platform tarafından, farklı ülkelerden akademisyenler, bürokratlar ve öğrencilerin katılımı ile 26-29 Nisan 2018 tarihleri arasında Antalya’nın Kaş ilçesi, Patara Antik Kenti bölgesinde gerçekleştirilecektir.	0534 458 86 96	0	0	0	2018-05-30	3
+8	2	Uluslararası Alan Eğitiminde Materyal Sempozyumu (IFEMS 2018)\t	Değerli Araştırmacılar,\r\nUluslararası Alan Eğitiminde Materyal Sempozyumu (IFEMS 2018) Yıldız Teknik Üniversitesi ev sahipliğinde Yıldız Teknik Üniversitesi Eğitim Fakültesi’nde 3-4-5 Mayıs tarihlerinde gerçekleştirilecektir.\r\nSempozyumda eğitim ortamlarının her kademesinde kullanılmış, kullanılmakta olan ve gelecekte kullanılabilecek ders materyalleri üzerine yapılan çalışma ve incelemelere yer verilecektir. Ders materyallerinin hazırlanması, geliştirilmesi, kullanılırlığı, öğrenen üzerindeki etkisi, yararları, katkısı, çeşitliliği gibi konulardan üretilecek bildiriler Alan Eğitiminde Materyal Sempozyumu’nda sunulabilecektir.\r\nSempozyum düzenleme kurulu olarak hem araştırmacıların hem de konuyla ilgili öğretmenlerimizin IFEMS 2018’e teşriflerini bekleriz.\r\n	0212 675 76 79	4	2	0	2018-05-16	3
+10	2	3. Uluslararası Medya Çalışmaları Sempozyumu	Prof. Dr. Douglas Kellner’in onur konuğu olarak katılımıyla Akdeniz Üniversitesi İletişim Fakültesi olarak 1-3 Kasım 2018 tarihlerinde Antalya’da düzenleyeceğimiz 3. Uluslararası Medya Çalışmaları Sempozyumu’nun ana teması “Dijitalleşen Dünyada İletişim Alanındaki Yönelimler” olarak belirlenmiştir.\r\nSempozyumumuz kapsamında “Sokak ve İnsan” temalı uluslararası bir fotoğraf sergisi de düzenlenecektir.\r\nUluslararası Sempozyumumuz hakkında detaylı bilgiye ims.akdeniz.edu.tr adresinden ulaşılabilir.\r\nKatılımlarınızı bekliyoruz.\r\nSempozyum Organizasyon Komitesi\r\n	0534 458 58 68	5	1	0	2018-11-01	4
+4	1	Ghost The Musical	Hollywood tarihinin kuşkusuz en sevilen aşk hikayelerinden biri olan Ghost’un (Hayalet) sahne versiyonu Ghost the Musical, 19 Ekim – 4 Kasım 2018 tarihleri arasında 21 performans için Zorlu PSM Ana Tiyatro’da!	0534 345 54 55	4	4	0	2018-10-19	2
+17	2	Uluslararası Türk Dişhekimleri Birliği Kongresi	Uluslararası Türk Dişhekimleri Birliği kongrelerine her sene artan ilginizin verdiği coşkuyla 2018 Eylül’ünde, en güzel mevsiminde Atatürk’ün şehri Ankara’da sizler için Türkiye’nin dişhekimliği alanındaki en kapsamlı kongresine hazırlanıyoruz.\r\nTürk Dişhekimleri Birliği Sürekli Dişhekimliği Eğitimi çerçevesini; kanıta dayalı dişhekimliği felsefesine dayanarak ve dişhekiminin tamir eden, eksiği yerine koyan hekim kimliğinin üstünde, hastalıkların ortaya çıkmasına engel olan ve ağız diş sağlığını sağlarken hastasının genel sağlığına da etki eden bir ağız doktoru yeterliliğine taşımıştır. Uluslararası Türk Dişhekimleri Birliği 2018 Ankara kongresinin bilimsel programı da bu düşünceyle yapılmıştır.\r\nBilimsel programı, sosyal aktiviteleri ve geniş Expo-Dental Fuarı ile sizlere bir önceki TDB Ankara Kongresinin Organizasyon Komitesi Başkanı rahmetli büyüğümüz Doç. Dr. Merih Baykara’ nın sözleriyle sesleniyorum:\r\n“Birçoğumuzun öğrencilik yıllarının geçtiği Kızılay’ı, Tunalı Hilmi’si, Kuğulu Parkıyla anılarınızın ve arkadaşlıklarınızın canlanacağı Ankara’ya, kongremize sizleri davet ediyoruz”.\r\n	0542 235 48 68	1	4	0	2018-09-27	6
+1	1	Galatasaray – Beşiktaş Futbol Maçı	Galatasaray – Beşiktaş Süper Lig 34.Hafta Maçı	0224 246 88 45	5	3	1	2018-05-19	1
+3	1	Masterpiece Ankara	"Masterpiece Ankara’nın Tunus Caddesi'ndeki keyifli ortamında güzel müzikler eşliğinde sonunda kendinizi bile şaşırtacak eserler üreteceksiniz. Yeteneğe ya da daha önceden bir deneyim sahibi olmanıza gerek yok, hatta böylesi çok daha keyifli. Masterpiece bir kurs değil, sanat, müzik ve hoş muhabbetle dopdolu geçen bir keyif seansı. Sanatçılarımızın adım adım yönlendirmeleri ile sonunda evinize, ofisinize götürebileceğiniz, arkadaşlarınıza hediye edebileceğiniz size ait bir sanat eseriniz olacak. Gerekli tüm malzemeleri biz sağlıyoruz. Sizin tek yapmanız gereken dilerseniz en sevdiğiniz içeceği alıp gelmek ve Masterpiece'in ayrıcalıklı ortamının keyfini çıkarmak" 	0232 245 68 48	3	2	0	2018-05-01	1
+6	1	Tolgshow	‘Arkadaşım’ karakteri ile milyonları güldüren Tolga Çevik sahnede artık bir klasik haline gelen doğaçlama oyununun 10’uncu yılında izleyicinin karşısına yepyeni sürprizlerle çıkıyor.\r\n\r\nBugüne kadar ‘Yönetmen’in bitmek bilmez ve çoğu zaman absürt isteklerini elinde hiçbir metin olmaksızın yerine getirmeye çalışan ‘Arkadaşım’ yeni sezonda isyan bayrağını açıyor ve ipleri eline alıyor.\r\n\r\n‘Gizemli Yönetmen’ Fırat Parlak ve ‘Minik’ lakaplı müzisyen Özer Atik’in de eşlik ettiği interaktif gösteri, bu sezon Zorlu Performans Sanatları Merkezi’nde izleyicisiyle buluşuyor.\r\n\r\nYanlış anlamalar, bilinmezlikler, didişmeler ve kahkahalar arasında yeni sezonda bir de ünlü konuk ağırlayacak olan ‘TOLGSHOW’ yine çok neşeli, yine çok eğlenceli ve yine her anı doğaçlama...\r\n	0224 586 86 48	5	3	0	2018-05-13	2
+22	4	Vehbi Koç Araştırma Bursu	Burslara başvuran doktora öğrencisi adaylar öğrencisi oldukları yüksek lisans programından alacakları transkripti de başvurularına eklemelidirler. Üniversitenin transkript vermediği durumlarda, söz konusu kurumda kayıtlı bir doktora öğrencisi olduklarını belirten resmi bir yazı almaları gerekmektedir. Tavsiye mektupları online başvuru sayfası yolu ile yollanmalıdır. Tavsiye mektupları, doğrudan sunulan projeyi ve adayın söz konusu projeyi yürütebilme konusundaki yeterliliğini değerlendirmelidir. Doktora öğrencisi burs adaylarının iki tavsiye mektubundan biri adayın tez danışmanından olmalıdır.	0531 456 78 93	5	5	0	2018-01-30	1
+11	2	III. Uluslararası Onkoloji ve Cerrahi Günleri\t	Sayın Meslektaşlarım ,\r\n‘’Marmara Üniversitesi III. Uluslararası Onkoloji ve Cerrahi Günleri” toplantısı Marmara Üniversitesi Tıp Fakültesi ve IASGO işbirliği ile 04 – 05 Mayıs 2018 tarihleri arasında yapılacaktır.\r\nBu kongrede ağırlıklı olarak hepatopankreatobiliyer sistem ve üst gastrointestinal sistemi içine alan sorunların multidisipliner bakış açısıyla tartışılmasını amaçladık. Çağımızın en önemli sağlık sorunu olan kanser hastalığı ile ilgili disiplinlerin ortak çabası ile oluşturulabilecek çözüm modellerini tartışacağımız bu toplantıda kongre ortamında bir araya gelme, bilimsel, sosyal ilişkilerimizi ve birlikte çalışma kültürümüzü geliştirme imkanı bulacağız. Bilimsel programımızda ilginizi çekeceğine inandığımız konular yerli ve yabancı konusunda uzman çok değerli konuşmacılarının katılacağı kongremizde tartışılacaktır.\r\nToplantımıza genel cerrahi, gastroenteroloji, onkoloji ve radyolojiden meslektaşlarımızın katılım ve katkılarını bekliyor sevgi ve saygılarımızı sunuyoruz.\r\n	0223 568 48 96	3	2	0	2018-06-11	4
+14	1	Beyaz	Derya Alabora ve Deniz Çakır'ın oynadıkları Beyaz, tiyatroseverlerle buluşuyor.\r\n\r\nKocasıyla mutsuz evliliğini sürükleyen bir kız kardeş... Uzun zaman sonra eski kasabasına dönen ablası... Ölüm döşeğindeki annelerinin başında bekleyen iki kız kardeşin bir ömürlük hesaplaşması... "Beyaz" birleştirir bütün renkleri. Çünkü "Şu ölümlü dünyada hiçbir şey önemi değil... Hiçbir şey..."\r\n\r\nEzop Sahne Sunar: "Beyaz"\r\n\r\nYazan: Emmanuelle Marie\r\nÇeviren: Zeynep Utku\r\nYöneten: Özen Yula\r\nDekor Tasarım & Styling: Tomris Kuzu\r\nIşık Tasarım: Yakup Çartık\r\nMüzik: Çiğdem Erken\r\nAsistanlar: Ferhat Işıktaş, Yunus İmga\r\nIşık Kumanda: Kamil Can Denizman\r\nDekor Sorumlusu: Turgut Güney\r\nAksesuar & Kostüm Sorumlusu: Ayşegül Özbay\r\nVideo Art: Pinpon Productions \r\nEfekt Uygulama: Özgür Yaşar İşler\r\nEfekt Kumanda: Yunus İmga\r\nDekor & Styling Asistanı: Selin Ölçen\r\nDekor Uygulama: Muhtar Pattabanoğlu\r\nFotoğraf: Muhsin Akgün\r\nGörsel Tasarım: Saydan Çelik\r\nOynayanlar: Derya Alabora, Deniz Çakır\r\n\r\n"Katkılarından dolayı Sayın Suna Selen'e teşekkür ederiz."\r\n	0505 154 78 12	3	4	0	2018-04-10	6
+18	3	İBB Sosyal Tesisleri	YTÜ Akademik ve İdari Personeline İBB Sosyal Tesislerinde % 20 indirim uygulanacaktır.(8 kişiye kadar yüzde 20 ,8 kişiden sonra yüzde 10 indirim uygulanacaktır.)\r\n(İndirim İBB Sosyal Tesisleri restaurantlarında geçerli olup personel kartı ibrazı gerekmektedir.)	0539 547 18 27	0	0	0	2018-01-01	7
+19	3	Avrupa Göz Hastaneleri	YILDIZ TEKNİK ÜNİVERSİTESİ  öğretim görevlileri, çalışanları ve öğretim görevlilerin, çalışanların  birinci derecede yakınlarına(anne, baba, eş, çocuk) ve öğrencilerine muayene ve tüm tedavilerde TÜM AVRUPA GÖZ HASTANELERİNDE GEÇERLİ %30 indirim yapılacaktır.	0212 515 51 51	5	1	0	2017-12-01	7
+20	3	Lamec Hotel Business 	Yıldız Teknik Üniversitesi PERSONELİ/ÖĞRENCİ/MEZUN ve Ailelerine %30 indirim. Üniversitemiz seminer ve toplantılarında salon ücreti alınmayacaktır. Diğer hizmetler ücrete tabidir.Toplu kullanımlarda özel fiyat uygulanacaktır.	(0262) 644 0400	4	2	0	2016-03-22	7
+5	1	The Chainsmokers Konseri	“The Chainsmokers”  İstanbul’daki ilk konseri için Play etkinliği kapsamında KüçükÇiftlik Park’a geliyor. Festivalde başka sürpriz isimler de performansları ile sahnede olacak. \r\n\r\nİngiltere ve Amerika listelerinde zirveyi zorlayan şarkıları “#Selfie” ile ünlerini dünyaya taşıyan, Amerikalı DJler Alex Pall ve Andrew Taggart tarafından kurulan “The Chainsmokers”, 3 Ağustos 2018 cuma günü Play etkinliği kapsamında, Charm Music ve Epifoni organizasyonuyla KüçükÇiftlik Park sahnesinde.\r\n\r\nMedya sponsorluğunu Power FM ve Power TV’nin üstlendiği “Play", popüler müziğin yerli-yabancı en “hit” temsilcilerini ağarlayacak. Merakla beklediğiniz sürpriz isimler pek yakında açıklanmaya başlanacak.\r\n\r\n\r\n“The Chainsmokers”  İstanbul’daki ilk konseri için Play etkinliği kapsamında KüçükÇiftlik Park’a geliyor. Festivalde başka sürpriz isimler de performansları ile sahnede olacak. \r\n\r\nİngiltere ve Amerika listelerinde zirveyi zorlayan şarkıları “#Selfie” ile ünlerini dünyaya taşıyan, Amerikalı DJler Alex Pall ve Andrew Taggart tarafından kurulan “The Chainsmokers”, 3 Ağustos 2018 cuma günü Play etkinliği kapsamında, Charm Music ve Epifoni organizasyonuyla KüçükÇiftlik Park sahnesinde.\r\n\r\nMedya sponsorluğunu Power FM ve Power TV’nin üstlendiği “Play", popüler müziğin yerli-yabancı en “hit” temsilcilerini ağarlayacak. Merakla beklediğiniz sürpriz isimler pek yakında açıklanmaya başlanacak.	0531 152 35 65	3	3	0	2018-08-03	2
+23	1	Altın Kızlar’la Boğaz’da İftar	Boğaz’ın en güzel yapılarından Sait Halim Paşa Yalısı, Ramazan’da Altın Kızlar eşliğinde fasıllı iftar gecelerine ev sahipliği yapıyor.\r\n\r\nSıcacık Ramazan pidesi eşliğinde leziz iftariyeliklerle başlayan iftar menüsünde çeşminigar çorbası ve Kayseri mantısından sonra hünkar beğendi geliyor. Dondurma yanında elmalı kadayıf topu da kahve eşliğinde sohbetleri tatlandırıyor.	0212 223 05 66	0	0	0	2018-05-25	1
+24	1	Altın Kızlar’la Boğaz’da İftar	Boğaz’ın en güzel yapılarından Sait Halim Paşa Yalısı, Ramazan’da Altın Kızlar eşliğinde fasıllı iftar gecelerine ev sahipliği yapıyor.\r\n\r\nSıcacık Ramazan pidesi eşliğinde leziz iftariyeliklerle başlayan iftar menüsünde çeşminigar çorbası ve Kayseri mantısından sonra hünkar beğendi geliyor. Dondurma yanında elmalı kadayıf topu da kahve eşliğinde sohbetleri tatlandırıyor.	0212 223 05 66	0	0	0	2018-06-06	2
+25	1	Altın Kızlar’la Boğaz’da İftar	Boğaz’ın en güzel yapılarından Sait Halim Paşa Yalısı, Ramazan’da Altın Kızlar eşliğinde fasıllı iftar gecelerine ev sahipliği yapıyor.\r\n\r\nSıcacık Ramazan pidesi eşliğinde leziz iftariyeliklerle başlayan iftar menüsünde çeşminigar çorbası ve Kayseri mantısından sonra hünkar beğendi geliyor. Dondurma yanında elmalı kadayıf topu da kahve eşliğinde sohbetleri tatlandırıyor.	0212 223 05 66	0	0	0	2018-06-12	2
+26	3	WORLD OF LANGUAGE ACADEMY WOLA	Yıldız Teknik Üniversitesi Öğrenci, Akademik ve İdari Personeline (birinci derece yakınları dahil)\r\n\r\nİngilizce dil eğitimi grup sınıf fiyatları üzerinden %30 indirim uygulanacaktır.	0212 382 82 82	3	5	0	2018-04-27	7
+21	3	İstanbul Dil Akademisi	İngilizce sınavlara (PROFICIENCY, IELTS, TOEFL,YDS, ...) hazırlık. İspanyolca dil eğitiminde YTÜ personeli öğrencisi emeklisi mezunu ve ailelerine indirim ve ayrıcalıklar	(0212) 327 3015	4	5	0	2018-06-03	7
+\.
+
+
+--
+-- TOC entry 2032 (class 0 OID 46684)
+-- Dependencies: 176
+-- Data for Name: etkinlikResim; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "etkinlikResim" (etk_resim_id, "etkinlikBilgi") FROM stdin;
+1	theatre.jpg
+2	sempozyum.jpg
+3	hiking.jpg
+4	scholarship.jpg
+5	futbol1.jpg
+6	futbol2.jpg
+7	concert.jpg
+8	hiking.jpg
+9	chainsmokers.jpg
+10	tolg.jpg
+11	beyaz.jpg
+13	Koc_burslari
+12	ytu_logo.jpg
+14	iftar.png
+\.
+
+
+--
+-- TOC entry 2033 (class 0 OID 46687)
+-- Dependencies: 177
+-- Data for Name: etkinlikTipi; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "etkinlikTipi" (tip_id, "tipAdı") FROM stdin;
+1	Sosyal Etkinlik
+2	Sempozyum
+3	Promosyon
+4	Doktora - Araştırma Bursu
+\.
+
+
+--
+-- TOC entry 2034 (class 0 OID 46690)
+-- Dependencies: 178
+-- Data for Name: etkinlik_resim; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY etkinlik_resim (e_id, resim_id) FROM stdin;
+4	1
+7	2
+8	2
+9	2
+10	2
+11	2
+12	4
+13	4
+15	1
+16	2
+17	2
+1	5
+2	6
+3	7
+5	9
+6	10
+14	11
+18	12
+19	12
+20	12
+21	12
+22	13
+23	14
+24	14
+25	14
+26	12
+\.
+
+
+--
+-- TOC entry 2035 (class 0 OID 46693)
+-- Dependencies: 179
+-- Data for Name: etkinlik_özellik; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "etkinlik_özellik" (e_id, "özellik_id", bilgi) FROM stdin;
+4	1	19 Ekim 2018
+9	1	1 Kasım 2018
+10	1	1 Kasım 2018
+14	1	10 Nisan 2018
+16	1	28 Haziran 2018
+17	1	27 Eylül 2018
+4	2	4 Kasım 2018
+9	2	3 Kasım 2018
+10	2	3 Kasım 2018
+14	2	15 Mayıs 2018
+16	2	30 Haziran 2018
+17	2	30 Eylül 2018
+1	9	İstanbul
+2	9	İstanbul
+3	9	Ankara
+4	9	İstanbul
+5	9	İstanbul
+6	9	İstanbul
+7	9	Antalya
+8	9	İstanbul
+9	9	İstanbul
+10	9	Antalya
+11	9	İstanbul
+14	9	Muğla
+15	9	Ankara
+16	9	Kocaeli
+17	9	Ankara
+1	7	Türk Telekom Arena
+2	7	Şükrü Saraçoğlu Stadı
+3	7	İncirli Avm 
+4	7	Zorlu Psm Arena
+5	7	KüçükÇiftlik Park
+6	7	Zorlu Psm
+7	7	Patara Antik Kenti
+8	7	Yıldız Teknik Üniversitesi
+9	7	İstanbul Üniversitesi
+10	7	Akdeniz Üniversitesi
+11	7	Marmara Üniversitesi
+14	7	Marmara Koleji
+15	7	Meb Şura Salonu
+16	7	Kocaeli Üniversitesi
+17	7	Hacettepe Üniversitesi
+1	3	90 TL
+2	3	120 TL
+3	3	30 TL
+4	3	150 TL
+5	3	180 TL
+6	3	180 TL
+7	3	Ücretsiz
+8	3	Ücretsiz
+9	3	Ücretsiz
+10	3	Ücretsiz
+11	3	Ücretsiz
+14	3	40 TL
+15	3	20 TL
+16	3	Ücretsiz
+17	3	Ücretsiz
+12	4	yesilay.org.tr
+13	4	unaoc.com
+1	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3006.344685871345!2d28.988904615317733!3d41.10516267929102!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab429cae58183%3A0x9bac4ccd2661b15a!2sT%C3%BCrk+Telekom+Arena+Stadyumu%2C+34396+Sar%C4%B1yer%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1525948021727
+2	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.7164506173567!2d29.034376115313894!3d40.98768937930292!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab870784d1389%3A0x2bf4921764859e70!2zRmVuZXJiYWjDp2UgxZ7DvGtyw7wgU2FyYWNvxJ9sdSBTdGFkxLE!5e0!3m2!1str!2str!4v1525948718950
+3	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12046.24778191094!2d28.859245485705905!3d40.99107206883835!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabb45b7f6bf17%3A0xf43140922e4df7a3!2zw5Ztw7xyIFBsYXphIEFsxLHFn3ZlcmnFnyBNZXJrZXpp!5e0!3m2!1str!2str!4v1525948805172
+4	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.1329481268285!2d29.01523591531649!3d41.06608647929497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab645fb9fd1a5%3A0x272558825cc8e0dd!2sZorlu+Performans+Sanatlar%C4%B1+Merkezi!5e0!3m2!1str!2str!4v1525948868370
+6	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.1329481268285!2d29.01523591531649!3d41.06608647929497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab645fb9fd1a5%3A0x272558825cc8e0dd!2sZorlu+Performans+Sanatlar%C4%B1+Merkezi!5e0!3m2!1str!2str!4v1525948868370
+5	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.179682251343!2d28.990576315315742!3d41.043199579297315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7738fc86803%3A0xf1f9c0dc6a45c11f!2zSGFyYml5ZSBNYWhhbGxlc2ksIEthZMSxcmdhbGFyIENkLiBObzo0LCAzNDM2NyDFnmnFn2xpL8Swc3RhbmJ1bA!5e0!3m2!1str!2str!4v1525949017025
+7	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3217.097590382902!2d29.3132960151685!3d36.26140958006314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c02d299fe9a7cd%3A0x15498ee97f108be1!2sPatara+Antik+Kenti!5e0!3m2!1str!2str!4v1525949198715
+8	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6020.067677424943!2d28.884968776373338!3d41.02451561719635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cabae67665c11f%3A0x3fb8948044de2687!2zWcSxbGTEsXogVGVrbmlrIMOcbml2ZXJzaXRlc2kgRGF2dXRwYcWfYSBLYW1ww7xzw7w!5e0!3m2!1str!2str!4v1525949325227
+9	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48160.5453556389!2d28.85432668439722!3d41.02451023481507!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab98ddc3c6be3%3A0x4f51928bdbcd627a!2s%C4%B0stanbul+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1525949381317
+10	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3190.8250445759063!2d30.653164315187098!3d36.89453347992924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c391cd6e38486d%3A0xfbd4e14587332eeb!2sAkdeniz+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1525949434335
+11	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3011.746754904348!2d29.050624515313952!3d40.98702587930298!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac78eb24e62c3%3A0xf6aeec48ddd5df7c!2sMarmara+%C3%9Cniversitesi!5e0!3m2!1str!2str!4v1525949480491
+5	1	3 Ağustos 2018
+14	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1506.496276139143!2d29.184496658157048!3d40.95974199482643!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cac575f665adbd%3A0xa86ea3066f8afbe0!2zQsO8ecO8a2Jha2thbGvDtnkgTWFoYWxsZXNpLCBNYWx0ZXBlIMOcbnYuIE1hcm1hcmEgRcSfaXRpbSBLw7Z5w7wsIDM0ODU4IER1ZHVsbHUgT3NiL01hbHRlcGUvxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1525949631389
+3	2	26 Mayıs 2018
+2	1	26 Mayıs 2018
+3	1	1 Mayıs 2018
+7	2	3 Haziran 2018
+8	1	16 Mayıs 2018
+7	1	30 Mayıs 2018
+8	2	25 Mayıs 2018
+11	1	11 Haziran 2018
+11	2	12 Haziran 2018
+12	8	4 Temmuz 2018
+13	8	20 Haziran 2018
+15	1	21 Mayıs 2018
+12	9	İstanbul
+13	9	İstanbul
+6	1	25 Mayıs 2018
+15	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3059.25232445533!2d32.82241381528031!3d39.93574527942384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d34ed958031b1d%3A0x8e3df89e6dd38abd!2sMeb+%C5%9Eura+Salonu!5e0!3m2!1str!2str!4v1525949680667
+16	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3019.3278836134314!2d29.92255621530852!3d40.820761179320236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cb4ef48998f089%3A0xa2458b3cc590eac3!2zS2FiYW_En2x1IE1haGFsbGVzaSwgS29jYWVsaSDDnG52LiBLYW1ww7xzw7wsIDQxMDAwIMSwem1pdC9Lb2NhZWxp!5e0!3m2!1str!2str!4v1525949728564
+17	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3062.299882625396!2d32.73256531527809!3d39.86752017943272!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14d3477aae96f6b1%3A0xfa02ea56f23afba0!2sHacettepe+%C3%9Cniversitesi+Beytepe+Kamp%C3%BCs%C3%BC!5e0!3m2!1str!2str!4v1525949765220
+13	1	20 Nisan 2018
+18	1	1 Ocak 2018
+18	2	1 Ocak 2019
+18	3	% 20 indirim
+18	7	İbb Sosyal Tesisleri
+19	1	1 Aralık 2017
+19	2	1 Aralık 2018
+19	3	%30 indirim
+19	7	Avrupa Göz Hastaneleri
+20	1	22 Mart 2016
+20	2	01 Haziran 2018
+20	3	%30 indirim
+20	7	Lamec Hotel Business
+20	9	Kocaeli
+21	2	3 Kasım 2020
+21	7	Barbaros Bulvarı. No: 39 Kat: 4 - 5
+21	9	İstanbul
+22	1	30 Ocak 2018
+22	2	30 Haziran 2018
+22	6	Koç Vakfı
+22	4	https://rcacapp.ku.edu.tr.
+1	1	19 Mayıs 2018
+12	1	1 Haziran 2018
+18	9	İstanbul
+19	9	İstanbul
+22	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.6905311542887!2d29.03572231525487!3d41.032026025912316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7e71772f349%3A0x6d2b9330a5100935!2zS2_DpyBIb2xkaW5nIEEuxZ4u!5e0!3m2!1str!2str!4v1526113251454
+20	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3020.256177106661!2d29.444170315248147!3d40.80036404014203!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cb20edfa5a7241%3A0xeac36c4f6f722611!2sLamec+Hotel+Business!5e0!3m2!1str!2str!4v1526113435679
+19	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.449055209469!2d28.850141015254998!3d41.03730802558706!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa54f06abb5d1%3A0xee5a3252c7750952!2sAvrupa+G%C3%B6z+Hastanesi!5e0!3m2!1str!2str!4v1526113548923
+18	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48151.1384566129!2d28.81731021929679!3d41.037371492797945!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x2561c0d899fc7f9f!2sIBB+SOSYAL+TESISLERI!5e0!3m2!1str!2str!4v1526113635916
+21	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.068713028251!2d29.004908915255292!3d41.04562642507485!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7a3960d08fd%3A0x95f363a60a880584!2sCihann%C3%BCma+Mahallesi%2C+Barbaros+Blv.+No%3A39+D%3AKat%3A+4+-+5%2C+34353+Be%C5%9Fikta%C5%9F%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1526113739281
+23	1	25 Mayıs 2018
+23	3	180
+23	9	İstanbul
+23	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.639803493579!2d29.06732621525738!3d41.12055702045713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacaf4cdad9cc3%3A0xf3291aee7618fe47!2zU2FpdCBIYWxpbSBQYcWfYSBZYWzEsXPEsQ!5e0!3m2!1str!2str!4v1526114553096
+24	1	25 Mayıs 2018
+24	3	180
+24	9	İstanbul
+24	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.639803493579!2d29.06732621525738!3d41.12055702045713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacaf4cdad9cc3%3A0xf3291aee7618fe47!2zU2FpdCBIYWxpbSBQYcWfYSBZYWzEsXPEsQ!5e0!3m2!1str!2str!4v1526114553096
+26	1	27 Nisan 2018
+26	2	27 Nisan 2019
+26	3	%30 indirim
+26	9	İstanbul
+26	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3009.087250601663!2d29.004850315255272!3d41.045221025099806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7a3bbc0d21f%3A0x9da1646d93b1f4f2!2sWorld+Of+Language+Academy!5e0!3m2!1str!2str!4v1526115575275
+25	1	25 Mayıs 2018
+25	3	180
+25	9	İstanbul
+25	10	https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3005.639803493579!2d29.06732621525738!3d41.12055702045713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cacaf4cdad9cc3%3A0xf3291aee7618fe47!2zU2FpdCBIYWxpbSBQYcWfYSBZYWzEsXPEsQ!5e0!3m2!1str!2str!4v1526114553096
+21	1	3 Haziran 2018
+\.
+
+
+--
+-- TOC entry 2036 (class 0 OID 46699)
+-- Dependencies: 180
+-- Data for Name: interest; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY interest (id, "interestName") FROM stdin;
+1	Spor
+2	Bilgisayar
+3	Siyaset
+4	Yiyecek
+5	Yolculuk
+6	El Sanatları
+7	Sağlık
+8	Haberleşme
+9	Teknoloji
+10	Hayvanlar Alemi
+11	Bahçe
+12	Fotoğrafçılık
+13	Moda
+14	Müzik
+15	Sinema
+16	Kitap
+17	Sergi
+\.
+
+
+--
+-- TOC entry 2066 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: interest_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('interest_id_seq', 17, true);
+
+
+--
+-- TOC entry 2038 (class 0 OID 46704)
+-- Dependencies: 182
+-- Data for Name: sikayet; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY sikayet (sikayet_eden_id, k_id, e_id, "sikayetMetni", "sikayetTarihi", sikayet_id, deger) FROM stdin;
+1	3	9	Deneme	2018-05-11	3	2
+1	2	6	Şikayet	2018-05-11	5	1
+3	2	5	abc	2018-05-11	8	0
+1	2	5	Yanlış Bilgi Girilmiş.	2018-05-11	2	2
+4	6	14	Deneme	2018-05-11	4	2
+1	2	4	Deneme	2018-05-11	6	2
+1	2	4	Deneme	2018-05-11	7	1
+2	6	16	Deneme	2018-05-11	9	2
+1	2	6	deneme	2018-05-12	11	0
+8	1	2	Sikayet	2018-05-11	1	2
+1	1	1	Deneme15	2018-05-12	10	1
+\.
+
+
+--
+-- TOC entry 2067 (class 0 OID 0)
+-- Dependencies: 183
+-- Name: sikayet_sikayet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('sikayet_sikayet_id_seq', 11, true);
+
+
+--
+-- TOC entry 2040 (class 0 OID 46712)
+-- Dependencies: 184
+-- Data for Name: userinterest; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY userinterest (id, userid, interestid) FROM stdin;
+1	1	1
+2	1	2
+3	1	3
+4	2	1
+5	2	2
+6	2	3
+7	3	5
+8	3	10
+9	4	7
+10	4	9
+11	4	3
+12	5	1
+13	5	7
+14	5	11
+15	6	13
+17	6	8
+16	6	5
+18	6	9
+19	7	1
+20	7	2
+21	7	3
+22	8	4
+23	8	5
+24	8	6
+25	8	7
+26	3	\N
+37	1	\N
+\.
+
+
+--
+-- TOC entry 2068 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: userinterest_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('userinterest_id_seq', 19, true);
+
+
+--
+-- TOC entry 2042 (class 0 OID 46717)
+-- Dependencies: 186
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY users (userid, name, surname, birtdate, city, gender, password, email, publicid, validation, image) FROM stdin;
+51	Metin	Ali	1970-01-01 00:00:00	Burdur	M	sha256$L8q14BMJ$54d081056383487f925b2e3067fc469cf8a5c9a9ddcadb84883a6dd2a3053159	seymenmurat216@hotmail.com	cc899cf6-3640-491c-84a5-9ce2c91be0d5	t	photo.png
+5	Ayşe	Yılmaz	1970-01-01 00:00:00	Kayseri	F	pbkdf2:sha256:50000$50AcuWxv$f6b5c36d0bc1d638bada3440bde0191e798c3f948ae1fe5ca669cc07ecb5e4b6	ayse@gmail.com	37c230c9-b791-4854-b63e-28273d44c191	t	photo.png
+6	Burak	Avcı	1970-01-01 00:00:00	Sivas	M	pbkdf2:sha256:50000$50AcuWxv$f6b5c36d0bc1d638bada3440bde0191e798c3f948ae1fe5ca669cc07ecb5e4b6	burak@gmail.com	27c230c9-b791-4854-b63e-28273d44c191	t	photo.png
+7	Fatma	Beyaz	1970-01-01 00:00:00	Samsun	F	pbkdf2:sha256:50000$50AcuWxv$f6b5c36d0bc1d638bada3440bde0191e798c3f948ae1fe5ca669cc07ecb5e4b6	fatma@gmail.com	17c230c9-b791-4854-b63e-28273d44c191	t	photo.png
+2	Murat	Seymen	1970-01-01 00:00:00	Bingöl	M	pbkdf2:sha256:50000$50AcuWxv$f6b5c36d0bc1d638bada3440bde0191e798c3f948ae1fe5ca669cc07ecb5e4b6	metinmakcay@gmail.com	67c230c9-b791-4854-b63e-28273d44c191	t	photo.png
+3	Aslıhan	Ilgaz	1970-01-01 00:00:00	Bursa	F	pbkdf2:sha256:50000$50AcuWxv$f6b5c36d0bc1d638bada3440bde0191e798c3f948ae1fe5ca669cc07ecb5e4b6	aslı@gmail.com	57c230c9-b791-4854-b63e-28273d44c191	t	photo.png
+4	Ali	Demir	1970-01-01 00:00:00	Kars	M	pbkdf2:sha256:50000$50AcuWxv$f6b5c36d0bc1d638bada3440bde0191e798c3f948ae1fe5ca669cc07ecb5e4b6	modul.etkinlik@gmail.com	47c230c9-b791-4854-b63e-28273d44c191	t	photo.png
+8	Efe	Akçay	1970-01-01 00:00:00	Burdur	M	pbkdf2:sha256:50000$50AcuWxv$f6b5c36d0bc1d638bada3440bde0191e798c3f948ae1fe5ca669cc07ecb5e4b6	efe@gmail.com	07c230c9-b791-4854-b63e-28273d44c191	t	photo.png
+1	Metin	Akçay	1970-01-01 00:00:00	Balıkesir	M	pbkdf2:sha256:50000$VbsMpHW9$ce20f62098e64b634e2325ddc61d02afe7a2d066db209a9848b94e4c90b97eaa	metinmertakcayhpalytu@gmail.com	94a8b1a4-a4c5-4ae4-bcf0-6638a773bc47	t	photo.png
+\.
+
+
+--
+-- TOC entry 2069 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: users_userid_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('users_userid_seq', 51, true);
+
+
+--
+-- TOC entry 2044 (class 0 OID 46722)
+-- Dependencies: 188
+-- Data for Name: yorum; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY yorum (k_id, e_id, "yorumMetni", "yorumTarihi", yorum_id) FROM stdin;
+4	1	Süper Maç Olacak. Stadı Dolduralım.	2018-03-18	1
+4	5	Çok iyi bir grup konseride çok iyi olacaktır.	2018-05-10	2
+5	1	Maç Galatasarayın rahat olun.	2018-03-24	3
+2	7	Merhaba	2018-05-11	4
+3	7	Deneme	2018-05-11	5
+5	9	Kesinlikle gidilmesi gereken bir etkinlik	2018-05-11	8
+5	6	Deneme2	2018-05-11	9
+2	5	deneme	2018-05-11	11
+5	4	Deneme	2018-05-11	12
+8	16	Deneme2	2018-05-11	13
+3	16	Deneme	2018-05-11	14
+7	7	Deneme2	2018-05-11	6
+\.
+
+
+--
+-- TOC entry 2070 (class 0 OID 0)
+-- Dependencies: 189
+-- Name: yorum_yorum_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('yorum_yorum_id_seq', 16, true);
+
+
+--
+-- TOC entry 2046 (class 0 OID 46730)
+-- Dependencies: 190
+-- Data for Name: özellik; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY "özellik" ("özellik_id", "özellikBilgi") FROM stdin;
+1	Başlangıç Tarihi
+2	Bitiş Tarihi
+3	Ücret
+4	Başvuru Yapılacak Yer
+5	Kayıt Gereksinimleri
+6	Bursu Veren
+7	Geçerli Olduğu Yer
+8	Bildiri Son Gönderim Tarihi
+9	sehir
+10	harita
+\.
+
+
+--
+-- TOC entry 1892 (class 2606 OID 46745)
+-- Name: aboutus_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY aboutus
+    ADD CONSTRAINT aboutus_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1894 (class 2606 OID 46747)
+-- Name: admin_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY admin
+    ADD CONSTRAINT admin_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1896 (class 2606 OID 46749)
+-- Name: communication_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY communication
+    ADD CONSTRAINT communication_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1900 (class 2606 OID 46751)
+-- Name: etkinlikResim_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "etkinlikResim"
+    ADD CONSTRAINT "etkinlikResim_pkey" PRIMARY KEY (etk_resim_id);
+
+
+--
+-- TOC entry 1902 (class 2606 OID 46753)
+-- Name: etkinlikTipi_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "etkinlikTipi"
+    ADD CONSTRAINT "etkinlikTipi_pkey" PRIMARY KEY (tip_id);
+
+
+--
+-- TOC entry 1898 (class 2606 OID 46755)
+-- Name: etkinlik_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY etkinlik
+    ADD CONSTRAINT etkinlik_pkey PRIMARY KEY (e_id);
+
+
+--
+-- TOC entry 1904 (class 2606 OID 46757)
+-- Name: interest_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY interest
+    ADD CONSTRAINT interest_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1906 (class 2606 OID 46759)
+-- Name: sikayet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY sikayet
+    ADD CONSTRAINT sikayet_pkey PRIMARY KEY (sikayet_id);
+
+
+--
+-- TOC entry 1908 (class 2606 OID 46761)
+-- Name: userinterest_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY userinterest
+    ADD CONSTRAINT userinterest_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1910 (class 2606 OID 46763)
+-- Name: users_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 1912 (class 2606 OID 46765)
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (userid);
+
+
+--
+-- TOC entry 1914 (class 2606 OID 46767)
+-- Name: users_publicid_key; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_publicid_key UNIQUE (publicid);
+
+
+--
+-- TOC entry 1916 (class 2606 OID 46769)
+-- Name: yorum_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY yorum
+    ADD CONSTRAINT yorum_pkey PRIMARY KEY (yorum_id);
+
+
+--
+-- TOC entry 1918 (class 2606 OID 46771)
+-- Name: özellik_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY "özellik"
+    ADD CONSTRAINT "özellik_pkey" PRIMARY KEY ("özellik_id");
+
+
+--
+-- TOC entry 2053 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2018-05-19 18:36:11
+
+--
+-- PostgreSQL database dump complete
+--
+
