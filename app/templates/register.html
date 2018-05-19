@@ -197,10 +197,10 @@
                     <label class="col-sm-2 col-form-label">Cinsiyet</label>
                     <div class="col-sm-5">
                       <div class="radio">
-                        <label><input type="radio" name="kadin">Kadın</label>
+                        <label><input type="radio" name="kadin" id="female"/>Kadın</label>
                       </div>
                       <div class="radio">
-                        <label><input type="radio" name="erkek">Erkek</label>
+                        <label><input type="radio" name="erkek" id="male"/>Erkek</label>
                       </div>
                     </div>
                   </div>
@@ -213,7 +213,7 @@
                     <div id="checkboxes" style="width: 157px;">
                       <div class="container1" style="width: 157px;">
                         {% for interest in interestList %}
-                        <input type="checkbox" name="ilgiAlan" value={{ interest.id }}/> {{interest.interestName}} <br />
+                        <input type="checkbox" name="ilgiAlan" id="interest" value={{ interest.id }}/> {{interest.interestName}} <br />
                         {% endfor %}
                       </div>
                     </div>
@@ -278,6 +278,36 @@
     <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/registration.js"></script>
+
+    <script type="text/javascript">
+      var submit = document.getElementById("submit");
+      var pass = document.getElementById("exampleInputPassword");
+      var pass1 = document.getElementById("exampleInputPassword1");
+      var email = document.getElementById("exampleInputEmail");
+      var email1 = document.getElementById("exampleInputEmail");
+      var city = document.getElementById("inputGroupSelect01");
+      var female = document.getElementById("female");
+      var male = document.getElementById("male");
+
+      submit.addEventListener('click',function (ev) {
+          if(pass.value != pass1.value) {
+             alert("Şifre Eşleşmiyor.!!!");
+             ev.preventDefault();
+          }
+          if(email.value != email1.value) {
+              alert("Email Eşleşmiyor.!!!");
+              ev.preventDefault();
+          }
+          if(city.value == "Tüm Yerler") {
+              alert("Lütfen bir şehir seçiniz.!!!");
+              ev.preventDefault();
+          }
+          if((female.checked == false) && (male.checked == false)) {
+              alert("Cinsiyet bölümünü işaretleyiniz.!!!");
+              ev.preventDefault();
+          }
+      });
+    </script>
 
   </body>
 </html>
