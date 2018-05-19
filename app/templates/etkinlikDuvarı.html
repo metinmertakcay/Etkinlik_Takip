@@ -94,44 +94,42 @@
 
                 <p>{{item.etkinlikAcıklaması}}</p>
             </div>
-        </div>
-        <div class="col-md-6" align="center">
 
-            <div class="card mt-4">
-                <br>
+            <div class="col-md-6" align="center">
+                <div class="card mt-4">
+                    <br>
+                    {% for i in harita %}
+                    <iframe src="{{i.bilgi}}" width="95%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    {% endfor %}
 
-                {% for i in harita %}
-                <iframe src="{{i.bilgi}}" width="95%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
-                {% endfor %}
-
-                <div class="card-body" >
-
-                    <p> <b>TARİH : </b>{% for i in tarih %}
-                        {{ i.bilgi}}
-                        {% endfor %}</p>
-                    <p> <b>YER : </b>{% for i in yer %}
-                        {{ i.bilgi}}
-                        {% endfor %}</p>
-                    <p> <b>ŞEHİR : </b>{% for i in sehir %}
-                        {{ i.bilgi}}
-                        {% endfor %}</p>
-                    <p> <b>ÜCRET : </b>{% for i in ucret %}
-                        {{ i.bilgi}}
-                        {% endfor %}</p>
-                    <b>İLETİŞİM : </b> {{item.iletisimBilgileri}}
-                </div>
-                {% endfor %}
-
-                {% for item in yorum %}
-                <div class="card mt-2 pad" style="background-color:#B9E2E4">
-                    <div class="card-body">
-                        <p class="card-text">
-                        <h5> <a href="/profil/{{item.userid}}">{{item.name }} {{item.surname}} </a></h5>
-                        {{item.yorumMetni}}
-                        </p>Yorum Tarihi: <b>{{item.yorumTarihi}}</b>
+                    <div class="card-body" >
+                        <p><b>TARİH : </b>{% for i in tarih %}
+                            {{ i.bilgi}}
+                            {% endfor %}</p>
+                        <p><b>YER : </b>{% for i in yer %}
+                            {{ i.bilgi}}
+                            {% endfor %}</p>
+                        <p><b>ŞEHİR : </b>{% for i in sehir %}
+                            {{ i.bilgi}}
+                            {% endfor %}</p>
+                        <p><b>ÜCRET : </b>{% for i in ucret %}
+                            {{ i.bilgi}}
+                            {% endfor %}</p>
+                        <b>İLETİŞİM : </b> {{item.iletisimBilgileri}}
                     </div>
+                    {% endfor %}
+
+                    {% for item in yorum %}
+                    <div class="card mt-2 pad" style="background-color:#B9E2E4">
+                        <div class="card-body">
+                            <p class="card-text">
+                            <h5> <a href="/profil/{{item.userid}}">{{item.name }} {{item.surname}} </a></h5>
+                            {{item.yorumMetni}}
+                            </p>Yorum Tarihi: <b>{{item.yorumTarihi}}</b>
+                        </div>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
