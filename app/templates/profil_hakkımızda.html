@@ -1,21 +1,16 @@
 <!doctype html>
 <html>
   <head>
-    <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
       <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/static/css/style.css">
+      <link rel="stylesheet" href="/static/style.css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
       <title>Etkinlik.com</title>
   </head>
-    <title>Etkinlik.com</title>
-    
-  </head>
   <body>
     
-
-   <div class="container">
+  <div class="container">
       <header>
        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
       <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
@@ -76,76 +71,55 @@
     </nav>
      </header>
       </div>
-    <div style="margin-top: 70px"></div>  
-    
+
+  <div style="margin-top: 70px"></div>
     <div class="container" >
-        <div class="col-lg-12 col-sm-11">
-               
-               <ul class="list-group">
-              <li class="list-group-item font-weight-bold mb-3" style="background-color:forestgreen;color: white">Sonuçlar</li>
-  
-                </ul>
-                <div class="table-responsive">
-                <table class="table">
-                      <thead>
-                        <tr>
-                            
-                          <th scope="col pl-5"><a href="#"><div class="saga">Etkinlik<i class="fas fa-angle-down pl-1"></i></div></a></th>
-                          <th scope="col"><a href="#">Tarih<i class="fas fa-angle-down pl-1"></i></a></th>
-                          <th scope="col"><a href="#">Yer<i class="fas fa-angle-down pl-1"></i></a></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                            {% for item in items2 %}
-
-                                    <tr>
-                                      <td><a href="/petkinlik/{{item.e_id}}"><img class="resim" src="/static/img/{{item.etkinlikBilgi}}">{{ item.etkinlikAdı }}</a></td>
-                                      <td><div class="bolum">
-                                        {{ item.tarih }}
-                                      </div></td>
-                                      <td><div class="bolum">{{ item.bilgi }}</div></td>
-                                    </tr>
-
-                            {% endfor %}
-
-
-                      </tbody>
-                </table>
-                </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <img src="/static/img/istanbul-siluet.png" style="width: 100%; height: 400px;">
+                <h2 class="my-4 text-center">Takımımız</h2>
             </div>
-
+            {% for admin in all_admin %}
+                <div class="col-lg-4 col-sm-6 text-center mb-4">
+                    <img class="rounded-circle img-fluid d-block mx-auto" src={{admin.image}} alt=""><br>
+                    <h3>{{admin.name}} {{admin.surname}}</h3>
+                    <p>{{admin.about}}</p>
+                    <div class="text-center pt-2">
+                        <ul class="list-unstyled list-inline">
+                            <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1" href= {{admin.facebook}}><i class="fab fa-facebook-f fa-2x"></i></a></li>
+                            <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1" href= {{admin.twitter}}><i class="fab fa-twitter fa-2x"></i></a></li>
+                            <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1" href= {{admin.linkedin}}><i class="fab fa-linkedin fa-2x"> </i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     </div>
-    
-      <footer class="page-footer font-small stylish-color-dark pt-3">
-      
-          <!--Footer Links-->
+    <footer class="page-footer font-small stylish-color-dark pt-3">
 
-          <!--/.Footer Links-->
                      
-            <!--Social buttons-->
-          <div class="text-center border-top pt-4">
-              <ul class="list-unstyled list-inline">
-                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1"><i class="fab fa-facebook-f fa-2x"></i></a></li>
-                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1"><i class="fab fa-twitter fa-2x"></i></a></li>
-                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-gplus mx-1"><i class="fab fa-google-plus fa-2x"> </i></a></li>
-                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1"><i class="fab fa-linkedin fa-2x"> </i></a></li>
-                  <li class="list-inline-item"><a class="btn-floating btn-sm btn-dribbble mx-1"><i class="fab fa-dribbble fa-2x"> </i></a></li>
-              </ul>
-          </div>
-          <!--/.Social buttons-->
+        <!--Social buttons-->
+        <div class="text-center border-top pt-4">
+            <ul class="list-unstyled list-inline">
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-fb mx-1"><i class="fab fa-facebook-f fa-2x"></i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-tw mx-1"><i class="fab fa-twitter fa-2x"></i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-gplus mx-1"><i class="fab fa-google-plus fa-2x"> </i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-li mx-1"><i class="fab fa-linkedin fa-2x"> </i></a></li>
+                <li class="list-inline-item"><a class="btn-floating btn-sm btn-dribbble mx-1"><i class="fab fa-dribbble fa-2x"> </i></a></li>
+            </ul>
+        </div>
+        <!--/.Social buttons-->
       
-          <!--Copyright-->
-          <div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
-              <div class="container-fluid">
-                  © 2018 Copyright: <a href="#"> Yıldız Teknik Üniversitesi </a>
-      
-              </div>
-          </div>
-          <!--/.Copyright-->    
-      </footer>
-   
-   
-     <!-- Optional JavaScript -->
+        <!--Copyright-->
+        <div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
+            <div class="container-fluid">
+                © 2018 Copyright: <a href="#"> Yıldız Teknik Üniversitesi </a>
+            </div>
+        </div>
+        <!--/.Copyright-->
+    </footer>
+
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>

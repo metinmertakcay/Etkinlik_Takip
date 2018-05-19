@@ -18,7 +18,7 @@
    <div class="container">
       <header>
        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
-      <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
+      <a class="navbar-brand" href="/"><img src="/static/img/logo2.png" width="40" height="40"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -48,54 +48,17 @@
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('iletisim') }}">İletişim</a>
           </li>
+            <li class="nav-item">
+            <a class="nav-link " href="/etara">Etkinlik Ara</a>
+          </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="registration.html" style="padding-right: 20px"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
+          <li><a href="{{ url_for('register') }}" style="padding-right: 20px"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
           <li class="nav-item dropdown " style="padding-right: 20px">
-            <a href="#"  data-toggle="dropdown" ><span><i class="fas fa-sign-in-alt"></i></span>
+            <a href="{{ url_for('login') }}"><span><i class="fas fa-sign-in-alt"></i></span>
               Giriş
             </a>
-            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdown" style="width: 320px">
-                <!-- Material form login -->
-                <!--Header-->
-                        <div class=" deep-blue-gradient rounded " style="height: 90px; padding: 10px;width: 300px;margin-left:10px;margin-top: 5px;">
-                            <h3 class="text-center mt-3 text-white"><i class="fa fa-lock"></i> Giriş:</h3>
-                        </div>
-                
-                <form style="padding: 10px;">
-                
-
-                     <div class="form-group row mt-3">
-                            <label for="inputEmail" class="col-1 col-form-label"><i class="fa fa-envelope  text-secondary pb-2"></i></label>
-                            <div class="col-10">
-                              <input type="email" class="form-control" id="inputEmail" placeholder="Email" style="">
-                            </div>
-                     </div>        
-
-                    <!-- Material input password -->
-                    <div class="form-group row mb-1">
-                       <label for="InputPassword" class="col-1 col-form-label"><i class="fa fa-lock prefix text-secondary pb-2"></i></label>
-                       <div class="col-10">
-                        <input type="password" id="Inputpassword" class="form-control" placeholder="Şifre">
-                        </div>
-                    </div>
-                    
-                    <div class="form-check pl-5 pt-1">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label text-secondary" for="exampleCheck1">Beni Hatırla</label>
-                      </div>
-                    
-                        <div class="text-center mt-4 mb-4">
-                            <button class="btn warm-flame-gradient text-white" type="submit">Giriş</button>
-                        </div>
-                    <p class="text-right" style="padding-right: 5% ">Şifreni mi <a href="#">unuttun?</a>
-                    </p>
-                    
-                    
-                </form>
-                      
-            </div>
           </li>
         </ul>
       </div>
@@ -144,39 +107,7 @@
     
       <footer class="page-footer font-small stylish-color-dark pt-3">
       
-          <!--Footer Links-->
-          <div class="container text-center text-md-left">
-              <div class="row">
-                 
-                  <div class="col-md-4">
-                      <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Bu Haftasonu</h5>
-                      <p>Üzgünüz, bölgenizde bu hafta sonu etkinlik bulunmuyor. 
-                         Bölgenizi değiştirmeyi deneyin.</p>
-                  </div>
-      
-                  <hr class="clearfix w-100 d-md-none">
-      
-                  <div class="col-md-2 mx-auto">
-                      <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">YARDIM</h5>
-                      <ul class="list-unstyled">
-                          <li><a href="{{url_for('iletisim') }}">Bize Ulaşın</a></li>
-                      </ul>
-                  </div>
-      
-                  <hr class="clearfix w-100 d-md-none">
-      
-                  <div class="col-md-2 mx-auto">
-                      <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">HAKKIMIZDA</h5>
-                      <ul class="list-unstyled">
-                          <li><a href="{{ url_for('hakkımızda') }}">Biz Kimiz?</a></li>
-                      </ul>
-                  </div>
-                  <hr class="clearfix w-100 d-md-none">
-      
-                  
-              </div>
-          </div>
-          <!--/.Footer Links-->
+
                      
             <!--Social buttons-->
           <div class="text-center border-top pt-4">
@@ -203,7 +134,7 @@
    
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
   </body>
 </html>

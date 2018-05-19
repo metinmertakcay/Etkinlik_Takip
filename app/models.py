@@ -16,7 +16,7 @@ Base = declarative_base()
 class Users(Base):
     __tablename__ = 'users'
 
-    userId = Column(Integer, primary_key=True, autoincrement=True)
+    userid = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(20), nullable=False)
     surname = Column(String(20), nullable=False)
     birtdate = Column(DateTime)
@@ -24,10 +24,11 @@ class Users(Base):
     gender = Column(String(1), nullable=False)
     password = Column(String(100), nullable=False)
     email = Column(String(40), unique=True)
-    publicId = Column(String(50), unique=True)
+    publicid = Column(String(50), unique=True)
+    image = Column(String(100))
     validation = Column(Boolean, nullable=False)
 
-    def __init__(self, name, surname, birtdate, city, gender, password, email, publicId, validation):
+    def __init__(self, name, surname, birtdate, city, gender, password, email, publicid, validation,image):
         self.name = name
         self.surname = surname
         self.birtdate = birtdate
@@ -35,12 +36,13 @@ class Users(Base):
         self.gender = gender
         self.password = password
         self.email = email
-        self.publicId = publicId
+        self.publicid = publicid
         self.validation = validation
+        self.image = image
 
     def to_dict(self):
         return {
-            'userId' : self.userId,
+            'userid' : self.userid,
             'name' : self.name,
             'surname' : self.surname,
             'birtdate' : self.birtdate,
@@ -48,26 +50,27 @@ class Users(Base):
             'gender' : self.gender,
             'password' : self.password,
             'email' : self.email,
-            'publicId' : self.publicId,
-            'validation' : self.validation
+            'publicid' : self.publicid,
+            'validation' : self.validation,
+            'image' : self.image
         }
 
 class UserInterest(Base):
     __tablename__ = 'userinterest'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    userId = Column(Integer)
-    interestId = Column(Integer)
+    userid = Column(Integer)
+    interestid = Column(Integer)
 
-    def __init__(self, userId, interestId):
-        self.userId = userId
-        self.interestId = interestId
+    def __init__(self, userid, interestid):
+        self.userid = userid
+        self.interestid = interestid
 
     def to_dict(self):
         return{
             'id' : self.id,
-            'userId' : self.userId,
-            'interestId' : self.interestId
+            'userid' : self.userid,
+            'interestid' : self.interestid
         }
 
 class Communication(Base):
@@ -216,8 +219,8 @@ class Sikayet(Base):
     __tablename__ = 'sikayet'
 
     sikayet_id = Column(Integer, primary_key=True, autoincrement = True)
-    sikayet_eden_id = Column(Integer, ForeignKey("kullanıcı.k_id", onupdate='CASCADE', ondelete='CASCADE'))
-    k_id = Column(Integer, ForeignKey("kullanıcı.k_id", onupdate='CASCADE', ondelete='CASCADE'))
+    sikayet_eden_id = Column(Integer, ForeignKey("users.userid", onupdate='CASCADE', ondelete='CASCADE'))
+    k_id = Column(Integer, ForeignKey("users.userid", onupdate='CASCADE', ondelete='CASCADE'))
     e_id = Column(Integer, ForeignKey("etkinlik.e_id", onupdate='CASCADE', ondelete='CASCADE'))
     sikayetMetni = Column(String(200), nullable=False)
     sikayetTarihi = Column(DateTime, nullable=False)
@@ -245,7 +248,7 @@ class Yorum(Base):
     __tablename__ = 'yorum'
 
     yorum_id = Column(Integer, primary_key=True, autoincrement=True)
-    k_id = Column(Integer, ForeignKey("kullanıcı.k_id", onupdate='CASCADE', ondelete='CASCADE'))
+    k_id = Column(Integer, ForeignKey("users.userid", onupdate='CASCADE', ondelete='CASCADE'))
     e_id = Column(Integer, ForeignKey("etkinlik.e_id", onupdate='CASCADE', ondelete='CASCADE'))
     yorumMetni = Column(String(30), nullable=False)
     yorumTarihi = Column(DateTime, nullable=False)

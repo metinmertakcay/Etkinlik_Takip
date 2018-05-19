@@ -12,41 +12,54 @@
     
   <div class="container">
       <header>
-          <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
-              <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                      <li class="nav-item active">
-                          <a class="nav-link" href="{{ url_for('sample_route') }}">Anasayfa <span class="sr-only">(current)</span></a>
-                      </li>
-                      <li class="nav-item dropdown">
-                          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategoriler</a>
-                          <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="/liste/1">Kültürel Etkinlikler</a>
-                              <a class="dropdown-item" href="/liste/2">Sempozyumlar</a>
-                              <a class="dropdown-item" href="/liste/3">Promosyonlar</a>
-                              <a class="dropdown-item" href="/liste/4">Burslar</a>
-                          </div>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link " href="{{ url_for('iletisim') }}">İletişim</a>
-                      </li>
-                  </ul>
-                  <ul class="nav navbar-nav navbar-right">
-                      <li><a href="{{ url_for('register') }}" style="padding-right: 20px"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
-                      <li><a class="pr-3" href="{{ url_for('login') }}"><span class="image_margin"><i class="fas fa-sign-in-alt"></i></span>Giriş</a></li>
-                  </ul>
-              </div>
-          </nav>
-      </header>
-  </div>
+       <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
+      <a class="navbar-brand" href="/"><img src="/static/img/logo2.png" width="40" height="40"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Anasayfa <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Kategoriler
+            </a>
+            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/liste/1">Kültürel Etkinlikler</a>
+              <a class="dropdown-item" href="/liste/2">Sempozyumlar</a>
+              <a class="dropdown-item" href="/liste/3">Promosyonlar</a>
+              <a class="dropdown-item" href="/liste/4">Burslar</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('iletisim') }}">İletişim</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link " href="/etara">Etkinlik Ara</a>
+          </li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="{{ url_for('register') }}" style="padding-right: 20px"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
+          <li class="nav-item dropdown " style="padding-right: 20px">
+            <a href="{{ url_for('login') }}"><span><i class="fas fa-sign-in-alt"></i></span>
+              Giriş
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+     </header>
+      </div>
 
   <div style="margin-top: 70px"></div>
     <div class="container" >
@@ -72,31 +85,7 @@
         </div>
     </div>
     <footer class="page-footer font-small stylish-color-dark pt-3">
-        <!--Footer Links-->
-        <div class="container text-center text-md-left">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">Bu Haftasonu</h5>
-                    <p>Üzgünüz, bölgenizde bu hafta sonu etkinlik bulunmuyor. Bölgenizi değiştirmeyi deneyin.</p>
-                </div>
-                <hr class="clearfix w-100 d-md-none">
-                <div class="col-md-2 mx-auto">
-                    <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">YARDIM</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ url_for('iletisim') }}">Bize Ulaşın</a></li>
-                    </ul>
-                </div>
-                <hr class="clearfix w-100 d-md-none">
-                <div class="col-md-2 mx-auto">
-                    <h5 class="text-uppercase mb-4 mt-3 font-weight-bold">HAKKIMIZDA</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{{ url_for('hakkımızda') }}">Biz Kimiz?</a></li>
-                    </ul>
-                </div>
-                <hr class="clearfix w-100 d-md-none">
-            </div>
-        </div>
-        <!--/.Footer Links-->
+
                      
         <!--Social buttons-->
         <div class="text-center border-top pt-4">
@@ -121,7 +110,7 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
   </body>
 </html>

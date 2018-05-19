@@ -43,10 +43,13 @@
             <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
+            <a class="nav-link" href="{{ url_for('phakkımızda') }}">Hakkımızda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('iletisim') }}">İletişim</a>
+            <a class="nav-link " href="{{ url_for('piletisim') }}">İletişim</a>
+          </li>
+            <li class="nav-item">
+            <a class="nav-link " href="/petara">Etkinlik Ara</a>
           </li>
         </ul>
 
@@ -57,8 +60,12 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user"></i> Profil </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                                <a class="dropdown-item" href="#">Hesabım</a>
-                                <a class="dropdown-item" href="#">Çıkış</a>
+                                <a class="dropdown-item" href="/profil/{{id}}">Hesabım</a>
+                                <a class="dropdown-item" href="/ara">Kullanıcı Ara</a>
+                                {% if email=="modul.etkinlik@gmail.com" %}
+                                <a class="dropdown-item" href="/sikayet/0">Şikayetler</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="/">Çıkış</a>
                             </div>
                         </li>
 
@@ -68,7 +75,7 @@
       </div>
     </nav>
      </header>
-      </div>    
+      </div>
     <div style="margin-top: 70px"></div>  
     
     <div class="container" >
@@ -140,7 +147,7 @@
    
      <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
   </body>
 </html>

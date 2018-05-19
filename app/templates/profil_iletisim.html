@@ -14,10 +14,11 @@
     </head>
 
     <body>
+
     <div class="container">
       <header>
        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
-      <a class="navbar-brand" href="/"><img src="/static/img/logo2.png" width="40" height="40"></a>
+      <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,40 +26,51 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Anasayfa <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/home">Anasayfa <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Kategoriler
             </a>
             <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/liste/1">Kültürel Etkinlikler</a>
-              <a class="dropdown-item" href="/liste/2">Sempozyumlar</a>
-              <a class="dropdown-item" href="/liste/3">Promosyonlar</a>
-              <a class="dropdown-item" href="/liste/4">Burslar</a>
+              <a class="dropdown-item" href="/pliste/1">Kültürel Etkinlikler</a>
+              <a class="dropdown-item" href="/pliste/2">Sempozyumlar</a>
+              <a class="dropdown-item" href="/pliste/3">Promosyonlar</a>
+              <a class="dropdown-item" href="/pliste/4">Burslar</a>
             </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
+            <a class="nav-link" href="{{ url_for('phakkımızda') }}">Hakkımızda</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('iletisim') }}">İletişim</a>
+            <a class="nav-link " href="{{ url_for('piletisim') }}">İletişim</a>
           </li>
             <li class="nav-item">
-            <a class="nav-link " href="/etara">Etkinlik Ara</a>
+            <a class="nav-link " href="/petara">Etkinlik Ara</a>
           </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{ url_for('register') }}" style="padding-right: 20px"><span><i class="fas fa-user"></i></span> Kayıt Ol </a></li>
-          <li class="nav-item dropdown " style="padding-right: 20px">
-            <a href="{{ url_for('login') }}"><span><i class="fas fa-sign-in-alt"></i></span>
-              Giriş
-            </a>
-          </li>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i> Profil </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                                <a class="dropdown-item" href="/profil/{{id}}">Hesabım</a>
+                                <a class="dropdown-item" href="/ara">Kullanıcı Ara</a>
+                                {% if email=="modul.etkinlik@gmail.com" %}
+                                <a class="dropdown-item" href="/sikayet/0">Şikayetler</a>
+                                {% endif %}
+                                <a class="dropdown-item" href="/">Çıkış</a>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
         </ul>
       </div>
     </nav>

@@ -1,19 +1,15 @@
 <!doctype html>
 <html>
   <head>
-    <head>
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-      <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/static/css/style.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+      <link rel="stylesheet" href="/static/css/style2.css">
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
-      <title>Etkinlik.com</title>
-  </head>
     <title>Etkinlik.com</title>
-    
   </head>
   <body>
-    
+
 
    <div class="container">
       <header>
@@ -60,8 +56,7 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fa fa-user"></i> Profil </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                                <a class="dropdown-item" href="/profil/{{id}}">Hesabım</a>
-                                <a class="dropdown-item" href="/ara">Kullanıcı Ara</a>
+                                <a class="dropdown-item" href="#">Hesabım</a>
                                 {% if email=="modul.etkinlik@gmail.com" %}
                                 <a class="dropdown-item" href="/sikayet/0">Şikayetler</a>
                                 {% endif %}
@@ -76,52 +71,23 @@
     </nav>
      </header>
       </div>
-    <div style="margin-top: 70px"></div>  
-    
-    <div class="container" >
-        <div class="col-lg-12 col-sm-11">
-               
-               <ul class="list-group">
-              <li class="list-group-item font-weight-bold mb-3" style="background-color:forestgreen;color: white">Sonuçlar</li>
-  
-                </ul>
-                <div class="table-responsive">
-                <table class="table">
-                      <thead>
-                        <tr>
-                            
-                          <th scope="col pl-5"><a href="#"><div class="saga">Etkinlik<i class="fas fa-angle-down pl-1"></i></div></a></th>
-                          <th scope="col"><a href="#">Tarih<i class="fas fa-angle-down pl-1"></i></a></th>
-                          <th scope="col"><a href="#">Yer<i class="fas fa-angle-down pl-1"></i></a></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                            {% for item in items2 %}
+    <div id="kaydir"></div>
 
-                                    <tr>
-                                      <td><a href="/petkinlik/{{item.e_id}}"><img class="resim" src="/static/img/{{item.etkinlikBilgi}}">{{ item.etkinlikAdı }}</a></td>
-                                      <td><div class="bolum">
-                                        {{ item.tarih }}
-                                      </div></td>
-                                      <td><div class="bolum">{{ item.bilgi }}</div></td>
-                                    </tr>
+    <div class="container" style="margin-top:10px;text-align:center;">
+        <h1>Bu etkinlik şikayet sebebiyle yayından çıkarılmıştır.</h1>
+        {% if email=="modul.etkinlik@gmail.com" %}
+          <br><br>
+                               <a href="/bankaldir/{{id}}"><button class="btn btn-success btn-lg " name="buttonsil" value="yorum" onclick="clickButton3()">
+                                         Etkinliği Yayına Al
+                               </button></a>
+          {% endif %}
+      </div>
 
-                            {% endfor %}
-
-
-                      </tbody>
-                </table>
-                </div>
-            </div>
-
-    </div>
-    
       <footer class="page-footer font-small stylish-color-dark pt-3">
-      
-          <!--Footer Links-->
 
+          <!--Footer Links-->
           <!--/.Footer Links-->
-                     
+
             <!--Social buttons-->
           <div class="text-center border-top pt-4">
               <ul class="list-unstyled list-inline">
@@ -133,19 +99,19 @@
               </ul>
           </div>
           <!--/.Social buttons-->
-      
+
           <!--Copyright-->
           <div class="footer-copyright py-3 text-center border-top pt-3 pb-3">
               <div class="container-fluid">
                   © 2018 Copyright: <a href="#"> Yıldız Teknik Üniversitesi </a>
-      
+
               </div>
           </div>
-          <!--/.Copyright-->    
+          <!--/.Copyright-->
       </footer>
-   
-   
-     <!-- Optional JavaScript -->
+
+
+    <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>

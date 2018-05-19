@@ -1,139 +1,138 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-      <link rel="stylesheet" href="/static/css/style.css">
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
     <title>Etkinlik.com</title>
 
-  <style type="text/css">
-  div.mart{
-    margin-top: 20px;
-  }
-</style>
-<title>Etkinlik.com</title>
+    <style type="text/css">
+        div.mart{
+            margin-top: 20px;
+        }
+        div.pad{
+            padding: 10px;
+        }
+    </style>
+    <title>Etkinlik.com</title>
 </head>
 <body>
+<div class="container">
+    <header>
+        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
+            <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/home">Anasayfa <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Kategoriler</a>
+                        <div class="dropdown-menu " aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/pliste/1">Kültürel Etkinlikler</a>
+                            <a class="dropdown-item" href="/pliste/2">Sempozyumlar</a>
+                            <a class="dropdown-item" href="/pliste/3">Promosyonlar</a>
+                            <a class="dropdown-item" href="/pliste/4">Burslar</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('phakkımızda') }}">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{ url_for('piletisim') }}">İletişim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="/petara">Etkinlik Ara</a>
+                    </li>
+                </ul>
 
-
- <div class="container">
-      <header>
-       <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
-      <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/home">Anasayfa <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Kategoriler
-            </a>
-            <div class="dropdown-menu " aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/pliste/1">Kültürel Etkinlikler</a>
-              <a class="dropdown-item" href="/pliste/2">Sempozyumlar</a>
-              <a class="dropdown-item" href="/pliste/3">Promosyonlar</a>
-              <a class="dropdown-item" href="/pliste/4">Burslar</a>
+                <ul class="nav navbar-nav navbar-right">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user"></i> Profil </a>
+                                <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                                    <a class="dropdown-item" href="/profil/{{id}}">Hesabım</a>
+                                    <a class="dropdown-item" href="/ara">Kullanıcı Ara</a>
+                                    {% if email=="modul.etkinlik@gmail.com" %}
+                                    <a class="dropdown-item" href="/sikayet/0">Şikayetler</a>
+                                    {% endif %}
+                                    <a class="dropdown-item" href="/">Çıkış</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </ul>
             </div>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="http://bookeder.com/weather/istanbul-18319">Hava Durumu</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('hakkımızda') }}">Hakkımızda</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('iletisim') }}">İletişim</a>
-          </li>
-        </ul>
+        </nav>
+    </header>
+</div>
 
-        <ul class="nav navbar-nav navbar-right">
-          <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-user"></i> Profil </a>
-                            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                                <a class="dropdown-item" href="#">Hesabım</a>
-                                <a class="dropdown-item" href="#">Çıkış</a>
-                            </div>
-                        </li>
-
-                    </ul>
-                </div>
-        </ul>
-      </div>
-    </nav>
-     </header>
-      </div>
-<div id="kaydir"></div>  
-
+<div id="kaydir"></div>
 <div class="container mart" >
+    {% for item in items %}
+    {%if item.banlanmısMı == 1 %}
+    <meta http-equiv="refresh" content="0; URL=/pbanli/{{item.e_id}}">
+    <meta name="keywords" content="automatic redirection">
+    {% endif %}
 
-{% for item in items %}
- <div class="row">
-   <div class="col-md-6" align="center">
-    <h3 style="color: #009CDE">
-                      {{item.etkinlikAdı}}
-                    </h3>
-     <br>
-    <img src="/static/img/{{item.etkinlikBilgi}}" style="border-radius:10px;"  width="500" height="400" class="img-circle" alt="Etkinlik Resmi"/>
-     <br><br>
     <div class="row">
-      <br>
-      <br>
-      <div class=" mx-auto" >
+        <div class="col-md-6" align="center">
+            <h3 style="color: #17A2B8">
+                {{item.etkinlikAdı}}
+            </h3>
+            <br>
+            <img src="/static/img/{{item.etkinlikBilgi}}" style="border-radius:10px;"  width="500" height="400" class="img-circle" alt="Etkinlik Resmi"/>
+            <br><br>
+            <div class="row">
+                <br>
+                <br>
+                <div class=" mx-auto" >
+                    {% for i in range(item.yıldızPuanToplamı| int) %}
+                    <img src="/static/img/star.png" width="40px" alt="Yıldız resmi">
+                    {% endfor %}
+                </div>
+            </div>
 
-        {% for i in range(item.yıldızPuanToplamı| int) %}
-          <img src="/static/img/star.png" width="40px" alt="Yıldız resmi">
-        {% endfor %}
-      </div>
+            <p>{{item.etkinlikAcıklaması}}</p>
+            <div class="mt-2">
+                <h4><strong>Etkinliği Şikayet Edin</strong></h4>
+                <b>Gereksiz yere kullananlar cezalandırılacaktır.</b>
+                <form name="form" method="post">
+
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control"  name="sikayet_k_id" value="{{item.yayınlayan}}" placeholder="İsim" required />
+                    </div>
+                    <div class="form-group" style="display:none">
+                        <input type="text" class="form-control"  name="etkinlik_e_id" value="{{item.e_id}}" placeholder="İsim" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" name="metin"  id="metin" rows="3" placeholder="Şikayet Metni" required /></textarea>
+                    </div>
+                    <button class="btn btn-info btn-lg  " type="submit" name="button2" value="sikayet" onclick="clickButton()">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Gönder
+                    </button>
+                </form>
+            </div>
+        </div>
     </div>
 
-    <p>{{item.etkinlikAcıklaması}}</p>
-
-    <div class="mt-2">
-                            <h4><strong>Etkinliği Şikayet Edin</strong></h4>
-                            <b>Gereksiz yere kullananlar cezalandırılacaktır.</b>
-                                <form name="form" method="post">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id="eden_k_id" name="eden_k_id" value="" placeholder="İd" required />
-                                    </div>
-                                    <div class="form-group" style="display:none">
-                                        <input type="text" class="form-control"  name="sikayet_k_id" value="{{item.yayınlayan}}" placeholder="İsim" required />
-                                    </div>
-                                    <div class="form-group" style="display:none">
-                                        <input type="text" class="form-control"  name="etkinlik_e_id" value="{{item.e_id}}" placeholder="İsim" required />
-                                    </div>
-                                    <div class="form-group">
-                                        <textarea class="form-control" name="metin"  id="metin" rows="3" placeholder="Şikayet Metni" required /></textarea>
-                                    </div>
-                                    <button class="btn btn-danger btn-lg " type="submit" name="button2" value="sikayet" onclick="clickButton()">
-                                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Gönder
-                                    </button>
-                                </form>
-                        </div>
-
-  </div>
-
-
-  <div class="col-md-6" align="center">
-
-
-
-
-    <div class="card mt-4">
+    <div class="col-md-6" align="center">
+        <div class="card mt-4">
             <br>
 
-      {% for i in harita %}
-        <iframe src="{{i.bilgi}}" width="95%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
-      {% endfor %}
+            {% for i in harita %}
+            <iframe src="{{i.bilgi}}" width="95%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+            {% endfor %}
 
       <div class="card-body" >
 
@@ -155,16 +154,23 @@
 
 
     {% for item in yorum %}
-    <div class="card mt-2" style="background-color:rgb(237, 247, 173)">
+    <div class="card mt-2 pad" style="background-color:#B9E2E4">
       <div class="card-body">
 
         <p class="card-text">
-          <h5>{{item.isim }} {{item.soyisim}} </h5>
+          <h5> <a href="/profil/{{item.userid}}">{{item.name }} {{item.surname}} </a></h5>
 
             {{item.yorumMetni}}
 
         </p>
           Yorum Tarihi: <b>{{item.yorumTarihi}}</b>
+
+          {% if email=="modul.etkinlik@gmail.com" %}
+          <br><br>
+                               <a href="/ysil/{{item.yorum_id}}/{{item.e_id}}"><button class="btn btn-success btn-lg " name="buttonsil" value="yorum" onclick="clickButton3()">
+                                         Yorumu Sil
+                               </button></a>
+          {% endif %}
 
       </div>
     </div>
@@ -176,13 +182,11 @@
       <div class="mt-2">
                             <h4><strong>Yorum Yapın</strong></h4>
                                 <form name="form" method="post">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" id= "name" name="k_id" value="" placeholder="İd" required />
-                                    </div>
+
                                     <div class="form-group">
                                         <textarea class="form-control" name="yorum" id="message" rows="3" placeholder="Yorum" required /></textarea>
                                     </div>
-                                    <button class="btn btn-success btn-lg " type="submit" name="button" value="yorum" onclick="clickButton2()">
+                                    <button class="btn btn-info btn-lg " type="submit" name="button" value="yorum" onclick="clickButton2()">
                                         <i class="fa fa-paper-plane-o" aria-hidden="true"></i> Gönder
                                     </button>
                                 </form>
@@ -216,14 +220,21 @@
       
     </div>
   </div>
-  <!--/.Copyright-->    
+  <!--/.Copyright-->
 </footer>
 
+    <script>
+        function OpenInNewTab(url) {
+          var win = window.open(url);
+          win.focus();
+        }
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script type="text/javascript" src="/static/js/alert2.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="/static/js/jquery-3.3.1.min.js"></script>
     <script src="/static/js/bootstrap.min.js"></script>
 </body>
 </html>

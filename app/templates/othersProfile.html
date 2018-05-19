@@ -29,36 +29,12 @@
 
 
 <title>Etkinlik.com</title>
-
-
-<script>
-function uploadImg() {
-
-    var a = document.getElementById("image").getAttribute("value");
-    document.getElementById("demo").innerHTML = a;
-    //var txt;
-   /* if (confirm("Press a button!")) {
-        txt = "You pressed OK!";
-
-    } else {
-        txt = "You pressed Cancel!";
-    }
-    document.getElementById("demo").innerHTML = txt;*/
-}
-
-function tıkladı() {
-	var name =  document.getElementById("image").files[0].name;
-	var fullPath = "/static/images/";
-	fullPath = fullPath + name;
-	document.getElementById("secilen").src = '';
-	document.getElementById("secilen").src = fullPath;
-}
-</script>
-
 </head>
 <body>
 
-    <div class="container">
+
+
+<div class="container">
       <header>
        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light border-bottom">
       <a class="navbar-brand" href="#"><img src="/static/img/logo2.png" width="40" height="40"></a>
@@ -118,7 +94,10 @@ function tıkladı() {
       </div>
     </nav>
      </header>
-</div>
+      </div>
+<div id="kaydir"></div>
+
+
 
 
 
@@ -129,25 +108,11 @@ function tıkladı() {
 		<div class="row mt-4">
 			<div class="col-md-4" align="center">
 
-				<img  src="/static/images/{{user.image}}"  width="304" height="236" alt="Profile Photo" id="secilen" />
+				<img  src="/static/images/{{user.image}}"  width="304" height="236" alt="Profile Photo">
 				<br/>
 
-                <div class="pad">
-                    <form action="/profil/{{user.userid}}" method="post" enctype="multipart/form-data" >
-
-     				 <span class="btn btn-info btn-file pad"><input type="file" name="image" id="image"/>
-                     </span>
-                    <br><br>
-                        <input type="submit" value="Upload your image" class="btn btn-warning" />
-                    </form>
-                </div>
-
-                <div class="pad">
-
-                </div>
-
 				<h2 class="mt-4" style="color: #17a2b8">{{user.name}} {{user.surname}} </h2>
-				<p> <i class="fa fa-birthday-cake" aria-hidden="true"></i>{{user.birtdate}} <br/>
+				<p><i class="fa fa-birthday-cake" aria-hidden="true"></i>{{user.birtdate}} <br/>
 					{{user.city}}'da yaşıyor. <br/><br/>
 					<b>İlgi Alanları :</b> <br/>
 					{% for ilgiAlani in ilgiAlanlari %}
@@ -206,13 +171,13 @@ function tıkladı() {
 
 				</div>
 			</div>
-			<!--/.Copyright-->    
+			<!--/.Copyright-->
 		</footer>
 
 
 		<!-- Optional JavaScript -->
 		<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-	<script src="/static/js/jquery-3.3.1.min.js"></script>
-    <script src="/static/js/bootstrap.min.js"></script>
+		 <script src="/static/js/jquery-3.3.1.min.js"></script>
+         <script src="/static/js/bootstrap.min.js"></script>
 	</body>
-</html>
+	</html>
