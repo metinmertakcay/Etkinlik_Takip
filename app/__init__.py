@@ -68,7 +68,7 @@ def sample_proute():
         tarih2 = request.form.get("inputGroupSelect02")
         yer = request.form.get("inputGroupSelect03")
         db = DBSession()
-        items2 = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE ' + kategori  + ' özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND etkinlik.e_id = etkinlik_resim.e_id AND ' +yer + ' etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id ' + tarih2 + ' order by etkinlik.e_id asc')
+        items2 = db.execute('SELECT * FROM etkinlik_özellik,etkinlik,etkinlik_resim,"etkinlikResim" WHERE ' + kategori  + ' özellik_id=9 AND etkinlik.e_id = etkinlik_özellik.e_id AND "banlanmısMı"=0 AND etkinlik.e_id = etkinlik_resim.e_id AND ' +yer + ' etkinlik_resim.resim_id = "etkinlikResim".etk_resim_id ' + tarih2 + ' order by etkinlik.e_id asc')
         return render_template("profil_search_liste_görüntüleme.html", items2=items2 ,userid=userid)
     else:
         return render_template('profil_home.html', items=items , items2 = items2,tarih=tarih,itemler=zip(tarih,items),email=session['email'], id=session.get('userid'), slider=slider)

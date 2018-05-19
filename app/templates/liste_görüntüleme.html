@@ -79,25 +79,19 @@
                       <thead>
                         <tr>
                             
-                          <th scope="col pl-5"><a href="#"><div class="saga">Etkinlik<i class="fas fa-angle-down pl-1"></i></div></a></th>
+                          <th scope="col pl-5"><div class="saga">Etkinlik</div></th>
                           <th scope="col"><a href="#">Tarih<i class="fas fa-angle-down pl-1"></i></a></th>
                           <th scope="col"><a href="#">Yer<i class="fas fa-angle-down pl-1"></i></a></th>
                         </tr>
                       </thead>
                       <tbody>
                             {% for item,i in items2 %}
-
-                                    <tr>
-                                      <td><a href="/etkinlik/{{item.e_id}}"><img class="resim" src="/static/img/{{item.etkinlikBilgi}}">{{ item.etkinlikAdı }}</a></td>
-                                      <td><div class="bolum">
-                                        {{ item.bilgi }}
-                                      </div></td>
-                                      <td><div class="bolum">{{ i.bilgi }}</div></td>
-                                    </tr>
-
+                            <tr>
+                                <td><a href="/etkinlik/{{item.e_id}}"><img class="resim" src="/static/img/{{item.etkinlikBilgi}}">{{ item.etkinlikAdı }}</a></td>
+                                <td><div class="bolum">{{ item.bilgi }}</div></td>
+                                <td><div class="bolum">{{ i.bilgi }}</div></td>
+                            </tr>
                             {% endfor %}
-
-
                       </tbody>
                 </table>
                 </div>
